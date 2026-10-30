@@ -12,7 +12,7 @@ import { SITE } from '../../core/site.config';
   doboznak, hanem az oldal részének hat.
 
   Két helyen használjuk:
-  - főoldal: teljes változat (idézetkártya, címkék, gomb)
+  - főoldal: teljes változat (címkék, gomb)
   - "Hajvesztés esetén" oldal: `compact` változat (kis kép, egy bekezdés)
 
   <app-about-maker />            → teljes
@@ -33,11 +33,6 @@ import { SITE } from '../../core/site.config';
             [alt]="about.imageAlt"
           />
         </div>
-        @if (!compact()) {
-          <blockquote class="quote">
-            <p>„{{ about.quote }}”</p>
-          </blockquote>
-        }
       </figure>
 
       <div class="text">
@@ -99,28 +94,6 @@ import { SITE } from '../../core/site.config';
       object-fit: cover;
     }
 
-    /* Idézetkártya, ami ráfut a képre – mint a hős szekció kis fotója */
-    .quote {
-      position: absolute;
-      right: -2.5rem;
-      bottom: 2rem;
-      width: 62%;
-      margin: 0;
-      padding: 1.1rem 1.25rem;
-      background: #fdeef4;
-      border-left: 3px solid var(--blush);
-      border-radius: var(--radius-sm);
-      box-shadow: 0 18px 40px -20px rgb(47 61 46 / 0.45);
-    }
-    .quote p {
-      margin: 0;
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.15rem;
-      line-height: 1.35;
-      color: var(--ink);
-    }
-
     /* --- Szöveg --- */
     .text p {
       font-size: var(--step-1);
@@ -173,11 +146,6 @@ import { SITE } from '../../core/site.config';
         width: min(100% - 2.5rem, 300px);
         justify-self: start;
         margin-bottom: 2rem;
-      }
-      .quote {
-        right: -2.5rem;
-        bottom: -2rem;
-        width: 70%;
       }
       .about--compact {
         grid-template-columns: 100px 1fr;

@@ -31,8 +31,6 @@ export const SITE = {
   about: {
     makerName: '', // TODO: pl. 'Endrődy Kata' – üresen hagyva nem jelenik meg
     heading: 'Aki a parókádat készíti',
-    /** Kiemelt idézet a kép mellett – egy mondat, ami összefoglalja a hozzáállását. */
-    quote: 'Egy paróka akkor jó, ha senki nem veszi észre, hogy paróka.',
     paragraphs: [
       'Fodrász vagyok, és évek óta készítek parókákat, szakállakat és bajuszokat színházi előadásokhoz. A színpadon tanultam meg, mennyit számít egy szálanként csomózott hajvonal.',
       'A saját műhelyemben ugyanezzel a gondossággal készítem a mindennapi és a hajvesztés miatti parókákat. Az első beszélgetéstől az utolsó igazításig velem beszélsz.',
