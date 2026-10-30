@@ -1,0 +1,13 @@
+{
+  "folders": [
+    { "name": "frontend (Angular)", "path": "frontend" },
+    { "name": "backend (NestJS)", "path": "backend" },
+    { "name": "projekt gyökér", "path": "." }
+  ],
+  "settings": {
+    "files.exclude": { "frontend": true, "backend": true }
+  },
+  "extensions": {
+    "recommendations": ["angular.ng-template", "humao.rest-client"]
+  }
+}

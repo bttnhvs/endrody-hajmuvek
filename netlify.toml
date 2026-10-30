@@ -1,0 +1,40 @@
+# Netlify beállítások a frontendhez (Angular).
+# A Netlify a repó gyökerében keresi ezt a fájlt; a `base` mondja meg, melyik mappát építse.
+
+[build]
+  base = "frontend"
+  command = "npm run build"
+  # Az Angular application builder a böngészős fájlokat a browser almappába teszi.
+  publish = "dist/hajmuvek/browser"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# SPA-átirányítás: minden ismeretlen útvonal (pl. /admin, /hajpotlas) az index.html-t kapja,
+# és az Angular router dönti el, mit mutasson. Enélkül egy könyvjelzőzött /admin cím
+# vagy egy oldalfrissítés 404-et adna, mert a szerveren nincs "admin" nevű fájl.
+# (A létező fájlokat – képek, JS – a Netlify ettől még közvetlenül kiszolgálja.)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Biztonsági fejlécek minden oldalra.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
+
+# A hash-elt nevű JS/CSS fájlok tartalma soha nem változik (új verzió = új név),
+# ezért a böngésző egy évig cache-elheti őket.
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

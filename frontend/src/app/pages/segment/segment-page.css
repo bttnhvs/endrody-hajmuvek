@@ -1,0 +1,116 @@
+.intro {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: end;
+  padding-block: clamp(3rem, 7vw, 5rem) 3rem;
+}
+
+.intro__photo {
+  aspect-ratio: 4 / 5;
+  max-width: 340px;
+  border-radius: 999px 999px var(--radius-sm) var(--radius-sm);
+  overflow: hidden;
+  background: var(--canvas);
+}
+
+.intro__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.intro h1 {
+  max-width: 18ch;
+}
+
+.crumb {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+}
+
+.offer {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+  padding-top: 1rem;
+}
+
+.offers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1.5px solid var(--sage);
+}
+
+.offers li {
+  padding: 1rem 0 1rem 2rem;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+/* Kis "tincs" jel a listaelemek előtt */
+.offers li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.45rem;
+  width: 1.1rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--rose);
+}
+
+.price {
+  background: var(--paper-tint);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  position: sticky;
+  top: 6rem;
+}
+
+.price__value {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  margin-bottom: 0.5rem;
+}
+
+.price p:not(.price__value) {
+  color: var(--ink-soft);
+}
+
+.care__maker {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.care p {
+  font-size: var(--step-1);
+  line-height: 1.55;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 860px) {
+  .intro,
+  .offer {
+    grid-template-columns: 1fr;
+  }
+
+  .price {
+    position: static;
+  }
+
+  .intro__photo {
+    max-width: 220px;
+    grid-row: 1;
+  }
+}

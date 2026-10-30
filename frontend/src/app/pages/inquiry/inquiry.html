@@ -1,0 +1,98 @@
+<section class="wrap layout">
+  <div class="intro">
+    <h1>Kérj konzultációt</h1>
+    <p class="lead">
+      Írd le röviden, mire lenne szükséged. Két munkanapon belül válaszolok,
+      és egyeztetünk egy időpontot.
+    </p>
+    <p>
+      Inkább beszélnél? Hívj a <a [href]="'tel:' + tel">{{ site.phone }}</a> számon,
+      vagy írj a <a [href]="'mailto:' + site.email">{{ site.email }}</a> címre.
+    </p>
+  </div>
+
+  @if (status() === 'sent') {
+    <div class="done" role="status">
+      <h2>Megkaptam az üzeneted</h2>
+      <p>Két munkanapon belül jelentkezem a megadott elérhetőségen.</p>
+      <a class="btn btn--ghost" routerLink="/">Vissza a főoldalra</a>
+    </div>
+  } @else {
+    <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <fieldset class="types">
+        <legend>Miben segíthetek?</legend>
+        @for (t of types; track t.id) {
+          <label class="type">
+            <input type="radio" formControlName="type" [value]="t.id" />
+            <span>{{ t.label }}</span>
+          </label>
+        }
+      </fieldset>
+
+      <div class="field">
+        <label for="name">Neved</label>
+        <input id="name" type="text" formControlName="name" autocomplete="name"
+          [attr.aria-invalid]="showError('name')" aria-describedby="name-err" />
+        @if (showError('name')) {
+          <p class="error" id="name-err">Add meg a neved.</p>
+        }
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="email">E-mail-cím</label>
+          <input id="email" type="email" formControlName="email" autocomplete="email"
+            [attr.aria-invalid]="showError('email')" aria-describedby="email-err" />
+          @if (showError('email')) {
+            <p class="error" id="email-err">Adj meg egy érvényes e-mail-címet, pl. nev&#64;példa.hu</p>
+          }
+        </div>
+        <div class="field">
+          <label for="phone">Telefonszám <span class="optional">(nem kötelező)</span></label>
+          <input id="phone" type="tel" formControlName="phone" autocomplete="tel" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="message">Üzenet</label>
+        <textarea id="message" rows="6" formControlName="message"
+          placeholder="Pl. milyen hosszú és milyen színű hajat szeretnél, és mikorra kellene."
+          [attr.aria-invalid]="showError('message')" aria-describedby="message-err"></textarea>
+        @if (showError('message')) {
+          <p class="error" id="message-err">Írj legalább egy-két mondatot, hogy fel tudjak készülni.</p>
+        }
+      </div>
+
+      <!-- Spamcsapda: képernyőn és képernyőolvasónak is rejtett, Tab-bal sem érhető el -->
+      <div class="trap" aria-hidden="true">
+        <label for="website">Weboldal</label>
+        <input id="website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" formControlName="consent" />
+        <span>Hozzájárulok, hogy az adataimat a megkeresésem megválaszolásához felhasználd.</span>
+      </label>
+      @if (showError('consent')) {
+        <p class="error">Az üzenet elküldéséhez szükség van a hozzájárulásodra.</p>
+      }
+
+      @if (status() === 'error') {
+        <p class="error" role="alert">
+          {{ errorMessage() }} Ha továbbra sem megy, írj közvetlenül a {{ site.email }} címre.
+        </p>
+      }
+
+      <button class="btn" type="submit" [disabled]="status() === 'sending'">
+        {{ status() === 'sending' ? 'Küldés…' : 'Üzenet küldése' }}
+      </button>
+
+      @if (slow()) {
+        <p class="slow" role="status">
+          Még dolgozom rajta. Az első küldés néha fél percig is eltarthat –
+          kérlek, ne zárd be az oldalt.
+        </p>
+      }
+    </form>
+  }
+</section>

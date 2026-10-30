@@ -1,0 +1,78 @@
+@let s = info();
+
+<section class="intro wrap">
+  <div>
+    <p class="crumb"><a routerLink="/">Főoldal</a> / {{ s.title }}</p>
+    <h1>{{ s.heroTitle }}</h1>
+    <p class="lead">{{ s.audience }} {{ s.summary }}</p>
+  </div>
+  @if (photo(); as p) {
+    <div class="intro__photo">
+      <img [ngSrc]="p.image" [width]="p.width" [height]="p.height" [alt]="p.alt" priority />
+    </div>
+  }
+</section>
+
+<section class="wrap offer">
+  <div>
+    <h2>Mit kapsz?</h2>
+    <ul class="offers">
+      @for (offer of s.offers; track offer) {
+        <li>{{ offer }}</li>
+      }
+    </ul>
+  </div>
+
+  <aside class="price" aria-label="Ár és következő lépés">
+    @if (s.priceFrom !== null) {
+      <p class="price__value">{{ s.priceFrom | currency: 'HUF' : 'symbol-narrow' : '1.0-0' }}-tól</p>
+    } @else {
+      <p class="price__value">Egyedi árajánlat</p>
+    }
+    <p>Az ár a haj típusától, hosszától és a munka mennyiségétől függ. A konzultáció után pontos ajánlatot adok.</p>
+    <a class="btn" routerLink="/ajanlatkeres" [queryParams]="{ tipus: s.id }">
+      {{ isMedical() ? 'Diszkrét konzultációt kérek' : 'Ajánlatot kérek' }}
+    </a>
+  </aside>
+</section>
+
+@if (isMedical()) {
+  <section class="wrap section care">
+    <h2>Amire ebben az időszakban figyelek</h2>
+    <p>
+      Tudom, hogy a hajvesztés nem csak esztétikai kérdés. A konzultáció négyszemközt zajlik,
+      a saját tempódban. Ha még a kezelés előtt jössz, lefotózzuk és felmérjük a frizurádat,
+      hogy a paróka a lehető legjobban hasonlítson a saját hajadra.
+    </p>
+    <p>
+      Kemoterápia esetén az onkológus orvosi vényen parókát írhat fel. A NEAK-támogatás csak a
+      hivatalos listán szereplő modellekre jár – kérdezz rá nyugodtan, segítek eligazodni.
+    </p>
+    <div class="care__maker">
+      <app-about-maker compact />
+    </div>
+  </section>
+}
+
+<section class="wrap section">
+  <h2>Így készül</h2>
+  <app-process-steps />
+</section>
+
+@if (works().length) {
+  <section class="wrap section">
+    <h2>Kapcsolódó munkáim</h2>
+    <div class="gallery">
+      @for (item of works(); track item.id) {
+        <app-work-card [item]="item" />
+      }
+    </div>
+  </section>
+}
+
+@if (faqs().length) {
+  <section class="wrap section">
+    <h2>Kérdések</h2>
+    <app-faq-list [faqs]="faqs()" />
+  </section>
+}

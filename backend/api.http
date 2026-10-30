@@ -1,0 +1,54 @@
+# Próbakérések az API-hoz.
+# VS Code-ban telepítsd a "REST Client" bővítményt (humao.rest-client),
+# és minden kérés fölött megjelenik egy "Send Request" link.
+#
+# Az admin tokent írd át a saját .env fájlod ADMIN_TOKEN értékére.
+
+@api = http://localhost:3001/api
+@token = cserelj-le-egy-hosszu-veletlen-szovegre
+
+### Életjel
+GET {{api}}/health
+
+### Új ajánlatkérés (ezt küldi a weboldal űrlapja)
+POST {{api}}/inquiries
+Content-Type: application/json
+
+{
+  "type": "hajpotlas",
+  "name": "Teszt Elek",
+  "email": "teszt@pelda.hu",
+  "phone": "+36 30 123 4567",
+  "message": "Szeretnék egy konzultációt kérni a jövő hétre.",
+  "consent": true,
+  "website": ""
+}
+
+### Hibás kérés – nézd meg a magyar hibaüzeneteket a válaszban
+POST {{api}}/inquiries
+Content-Type: application/json
+
+{
+  "type": "valami",
+  "name": "T",
+  "email": "nem-email",
+  "message": "rövid",
+  "consent": false
+}
+
+### Admin: az összes ajánlatkérés (token nélkül 401-et kapsz)
+GET {{api}}/inquiries
+Authorization: Bearer {{token}}
+
+### Admin: csak az újak
+GET {{api}}/inquiries?status=uj
+Authorization: Bearer {{token}}
+
+### Admin: állapot módosítása (az id-t másold be az előző válaszból)
+PATCH {{api}}/inquiries/IDE-JON-AZ-ID/status
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "status": "folyamatban"
+}

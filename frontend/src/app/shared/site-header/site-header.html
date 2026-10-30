@@ -1,0 +1,36 @@
+<header class="header" [class.header--open]="menuOpen()">
+  <div class="wrap bar">
+    <a class="brand" routerLink="/" aria-label="{{ site.name }} {{ site.subtitle }} – főoldal">
+      <img class="brand__logo" [src]="site.logo" alt="" width="46" height="50" />
+      <span class="brand__text">
+        <span class="brand__name">{{ site.name }}</span>
+        <span class="brand__sub">{{ site.subtitle }}</span>
+      </span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="fomenu"
+      (click)="toggleMenu()"
+    >
+      {{ menuOpen() ? 'Bezárás' : 'Menü' }}
+    </button>
+
+    <nav id="fomenu" class="nav" aria-label="Főmenü">
+      <ul>
+        @for (link of links; track link.path) {
+          <li>
+            <a
+              [routerLink]="link.path"
+              routerLinkActive="is-active"
+              ariaCurrentWhenActive="page"
+            >{{ link.label }}</a>
+          </li>
+        }
+      </ul>
+      <a class="btn nav__cta" routerLink="/ajanlatkeres">Konzultációt kérek</a>
+    </nav>
+  </div>
+</header>

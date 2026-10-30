@@ -1,0 +1,184 @@
+/*
+  Globális stílusok.
+  Itt csak a "design tokenek" (színek, betűk, térközök) és az általános
+  elemek stílusa él. Minden komponens-specifikus stílus a komponens
+  saját .css fájljában van – azt az Angular automatikusan elszigeteli
+  (ViewEncapsulation.Emulated), így nem "szivárog" ki más komponensekre.
+*/
+
+:root {
+  /* Színek – a logóból: zöld koszorú, rózsaszín rózsák */
+  --paper: #ffffff;        /* fehér háttér: a fotók a fehér műhelyben készültek */
+  --paper-tint: #f2f6ef;   /* halvány zöld szekcióháttér */
+  --ink: #2f3d2e;          /* sötét zöldesszürke szöveg (puhább, mint a fekete) */
+  --ink-soft: #5a6658;     /* másodlagos szöveg */
+  --rose: #a8406b;         /* gombok, linkek (a logó rózsaszínjének sötét, jól olvasható párja) */
+  --rose-deep: #85294f;    /* hover / aktív */
+  --blush: #ee97ba;        /* a logó rózsaszínje – díszítésre, sötét háttéren szövegre */
+  --leaf: #8fc27d;         /* a logó világoszöldje */
+  --sage: #668559;         /* a logó sötétzöldje */
+  --green: #5e7d53;        /* barátságos zsályazöld felület (lábléc) – fehér szöveg még jól olvasható rajta */
+  --leaf-tint: #e5efdf;    /* világos levélzöld sáv */
+  --canvas: #ece6dc;       /* a vászon fejforma színe – képek háttere töltés közben */
+  --line: rgb(47 61 46 / 0.14);
+  --surface: #ffffff;
+
+  /* Betűk */
+  --font-display: 'Bodoni Moda', 'Didot', Georgia, serif;
+  --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Típusskála (kb. 1.25-ös arány) */
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3rem;
+  --step-2: clamp(1.6rem, 2.6vw, 2.1rem);
+  --step-3: clamp(2rem, 4vw, 3rem);
+  --step-4: clamp(2.6rem, 7vw, 5.2rem);
+
+  /* Térközök és méretek */
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --section: clamp(4rem, 9vw, 7.5rem);
+  --measure: 62ch;
+  --page: 1180px;
+  --radius-sm: 6px;
+  --radius-lg: 22px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.08;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--step-4); letter-spacing: -0.02em; }
+h2 { font-size: var(--step-3); letter-spacing: -0.01em; }
+h3 { font-size: var(--step-1); line-height: 1.25; }
+
+p {
+  margin: 0 0 1em;
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--rose);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--rose-deep);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+:focus-visible {
+  outline: 3px solid var(--rose);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Közös elrendezési segédosztályok */
+.wrap {
+  width: min(100% - 2 * var(--gutter), var(--page));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section);
+}
+
+/* Két egymást követő szekció között ne duplázódjon a térköz */
+.section + .section {
+  padding-top: 0;
+}
+
+.lead {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* Gombok – egyetlen definíció, módosító osztályokkal */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.85em 1.5em;
+  border-radius: 999px;
+  border: 1.5px solid var(--rose);
+  background: var(--rose);
+  color: #fff;
+  font: 600 var(--step-0) / 1 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.btn:hover {
+  background: var(--rose-deep);
+  border-color: var(--rose-deep);
+  color: #fff;
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.btn--ghost:hover {
+  background: var(--leaf-tint);
+  border-color: var(--sage);
+  color: var(--ink);
+}
+
+.btn[disabled] {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,42 @@
+# Render "Blueprint" – a backend (NestJS API) leírása kódként.
+# Render felületén: New → Blueprint → válaszd ki a GitHub-repót, és ebből a fájlból
+# mindent beállít. A `sync: false` jelölésű értékeket a felület kéri be (titkok, címek).
+
+services:
+  - type: web
+    name: hajmuvek-api            # ebből lesz a cím: https://hajmuvek-api.onrender.com
+    runtime: node
+    plan: free
+    region: frankfurt             # a legközelebbi európai régió
+    rootDir: backend
+    # A `nest build`-hez a devDependencies is kellenek, ezért NE állíts be NODE_ENV=production-t.
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start:prod
+    # Ezt hívja a Render, hogy tudja, elindult-e az alkalmazás.
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # Render mögött a valódi látogató IP-je az X-Forwarded-For fejlécben jön (rate limit).
+      - key: TRUST_PROXY
+        value: "true"
+      # A Neon adatbázis kapcsolati címe (postgres://...). Titok!
+      - key: DATABASE_URL
+        sync: false
+      # Első indításkor létrehozza a táblát. Ha már vannak valódi adatok, érdemes
+      # migrációkra váltani és false-ra állítani (lásd TANULAS-BACKEND.md).
+      - key: DB_SYNC
+        value: "true"
+      # A Netlify-oldal címe, pl. https://endrody-hajmuvek.netlify.app
+      - key: CORS_ORIGIN
+        sync: false
+      # A Render generál egy hosszú, véletlen értéket. Ezzel kell belépni a /admin oldalon;
+      # a Render felületén (Environment) lehet kimásolni.
+      - key: ADMIN_TOKEN
+        generateValue: true
+      - key: RESEND_API_KEY
+        sync: false
+      - key: MAIL_TO
+        sync: false
+      - key: MAIL_CONFIRM_TO_CUSTOMER
+        value: "false"

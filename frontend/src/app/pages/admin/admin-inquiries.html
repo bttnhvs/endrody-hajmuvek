@@ -1,0 +1,73 @@
+<section class="wrap admin">
+  <header class="head">
+    <h1>Ajánlatkérések</h1>
+    <div class="actions">
+      <button class="btn btn--ghost btn--small" type="button" (click)="load()"
+        [disabled]="loadState() === 'loading'">Frissítés</button>
+      <button class="btn btn--ghost btn--small" type="button" (click)="logout()">Kilépés</button>
+    </div>
+  </header>
+
+  <!-- Szűrő fülek: aria-pressed jelzi a képernyőolvasónak, melyik az aktív -->
+  <nav class="filters" aria-label="Szűrés állapot szerint">
+    @for (f of filters(); track f.id) {
+      <button type="button" class="filter" [attr.aria-pressed]="filter() === f.id"
+        (click)="filter.set(f.id)">
+        {{ f.label }} <span class="count">{{ counts()[f.id] }}</span>
+      </button>
+    }
+  </nav>
+
+  @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+  }
+
+  @switch (loadState()) {
+    @case ('loading') {
+      <p class="muted" role="status">Betöltés…</p>
+    }
+    @case ('error') {
+      <button class="btn" type="button" (click)="load()">Újrapróbálom</button>
+    }
+    @case ('ready') {
+      @for (item of visible(); track item.id) {
+        <article class="card" [class.card--new]="item.status === 'uj'">
+          <header class="card-head">
+            <div>
+              <h2>{{ item.name }}</h2>
+              <p class="meta">
+                <span class="tag">{{ typeLabel(item.type) }}</span>
+                <time [attr.datetime]="item.createdAt">{{ item.createdAt | date: 'y. MMMM d., HH:mm' }}</time>
+              </p>
+            </div>
+            <label class="status">
+              <span class="visually-hidden">{{ item.name }} ajánlatkérésének állapota</span>
+              <select (change)="onStatusChange(item, $event)" [disabled]="saving().has(item.id)">
+                @for (s of statuses; track s.id) {
+                  <option [value]="s.id" [selected]="s.id === item.status">{{ s.label }}</option>
+                }
+              </select>
+            </label>
+          </header>
+
+          <p class="message">{{ item.message }}</p>
+
+          <p class="contact">
+            <a [href]="mailtoLink(item)">{{ item.email }}</a>
+            @if (item.phone) {
+              <a [href]="telLink(item)">{{ item.phone }}</a>
+            }
+          </p>
+        </article>
+      } @empty {
+        <p class="muted">
+          @if (filter() === 'uj') {
+            Nincs új ajánlatkérés.
+          } @else {
+            Ebben a csoportban nincs ajánlatkérés.
+          }
+        </p>
+      }
+    }
+  }
+</section>

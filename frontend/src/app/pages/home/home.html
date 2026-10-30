@@ -1,0 +1,125 @@
+<!-- 1. Hős: valódi munka fotója a logó koszorújára utaló ívben -->
+<section class="hero wrap">
+  <div class="hero__text">
+    <h1>Kézzel csomózott parókák színpadra és hétköznapokra</h1>
+    <p class="lead">
+      Évek óta készítek parókákat, szakállakat és bajuszokat színházi előadásokhoz.
+      Ugyanezzel a pontossággal készítek neked is: mindennapi viseletre, vagy arra az
+      időszakra, amikor elveszíted a hajad.
+    </p>
+    <div class="hero__actions">
+      <a class="btn" routerLink="/ajanlatkeres">Konzultációt kérek</a>
+      <a class="btn btn--ghost" routerLink="/munkaim">Munkáim</a>
+    </div>
+  </div>
+
+  <div class="hero__art">
+    <div class="arch">
+      <img
+        ngSrc="images/munkak/platinaszoke-hullamok.jpg"
+        width="825"
+        height="1100"
+        priority
+        alt="Platinaszőke, hullámos vintage paróka a fejformán"
+      />
+    </div>
+    <figure class="inset">
+      <!-- Négyzetes keretbe vágott fekvő fotó → fill mód (lásd work-card.ts) -->
+      <div class="inset__photo">
+        <img ngSrc="images/munkak/bajusz.jpg" fill alt="Sötétbarna, kunkorodó bajusz csipkealapon" />
+      </div>
+      <figcaption>Bajusz csipkealapra csomózva</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 2. Vevőkör-választó -->
+<section class="section wrap" aria-labelledby="kinek">
+  <h2 id="kinek">Kinek készítek?</h2>
+  <ul class="segments">
+    @for (s of content.segments(); track s.id) {
+      <li class="segment">
+        <a class="segment__link" [routerLink]="s.path">
+          <h3 class="segment__title">{{ s.title }}</h3>
+          <p class="segment__audience">{{ s.audience }}</p>
+          <p>{{ s.summary }}</p>
+          <span class="segment__more">Részletek</span>
+        </a>
+      </li>
+    }
+  </ul>
+</section>
+
+<!-- 2/b. Rólam: kivel fog találkozni a vevő -->
+<section class="section wrap" aria-label="Rólam">
+  <app-about-maker />
+</section>
+
+<!-- 3. Bizalomépítés: a színházi munka mint bizonyíték -->
+<section class="proof">
+  <div class="wrap proof__inner">
+    <img
+      class="proof__img"
+      ngSrc="images/munkak/rokoko-parokapar.jpg"
+      width="1100"
+      height="825"
+      alt="Két rokokó paróka: egy púderszőke és egy ősz, sűrű fürtökkel"
+    />
+    <div>
+      <p class="proof__quote">
+        A színpadon egy parókának két méterről, reflektorfényben is hihetőnek kell lennie.
+        Ezt a mércét hozom el a hétköznapi parókákba is.
+      </p>
+      <ul class="proof__facts">
+        <li><strong>Kézi csomózás</strong> szálanként, természetes választékkal</li>
+        <li><strong>A te fejformádra</strong> készül, nem polcról levett méret</li>
+        <li><strong>Utógondozás</strong>: mosás, javítás, frissítés évekig</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Folyamat -->
+<section class="section wrap" aria-labelledby="folyamat">
+  <h2 id="folyamat">Így készül a parókád</h2>
+  <app-process-steps />
+</section>
+
+<!-- 5. A műhelyből: a kézművesség bizonyítéka -->
+<section class="workshop" aria-labelledby="muhely">
+  <div class="wrap">
+    <h2 id="muhely">A műhelyből</h2>
+    <p class="lead">Egy paróka több tízezer egyenként befűzött hajszálból áll. Így néz ki közben.</p>
+    <div class="workshop__grid">
+      @for (item of workshop(); track item.id) {
+        <app-work-card [item]="item" />
+      }
+    </div>
+  </div>
+</section>
+
+<!-- 6. Munkák -->
+<section class="section wrap" aria-labelledby="munkak">
+  <div class="section-head">
+    <h2 id="munkak">Néhány munkám</h2>
+    <a routerLink="/munkaim">Az összes munka</a>
+  </div>
+  <div class="gallery">
+    @for (item of featured(); track item.id) {
+      <app-work-card [item]="item" />
+    }
+  </div>
+</section>
+
+<!-- 7. GYIK -->
+<section class="section wrap" aria-labelledby="gyik">
+  <h2 id="gyik">Gyakori kérdések</h2>
+  <app-faq-list [faqs]="topFaqs()" />
+</section>
+
+<!-- 8. Záró felhívás -->
+<section class="wrap closing">
+  <h2>Beszéljük meg, milyen parókára van szükséged</h2>
+  <p class="lead">Az első beszélgetés ingyenes, és semmire nem kötelez.</p>
+  <a class="btn" routerLink="/ajanlatkeres">Konzultációt kérek</a>
+</section>
