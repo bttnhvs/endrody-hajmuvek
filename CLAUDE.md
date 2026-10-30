@@ -62,7 +62,8 @@ Részletes magyarázat: `frontend/TANULAS.md`, `backend/TANULAS-BACKEND.md`.
 - 2026-10-29: **kitelepítés előkészítve**: `render.yaml`, `netlify.toml`, `KITELEPITES.md`
   (lépésről lépésre), `frontend/src/environments/` (fejlesztés: `/api`, éles:
   `https://hajmuvek-api.onrender.com/api`, `angular.json` fileReplacements). Az űrlap 4 mp után
-  „Még dolgozom rajta” üzenetet mutat (Render cold start). A projekt még NEM git-repó.
+  „Még dolgozom rajta” üzenetet mutat (Render cold start). 
+- 2026-10-30: **git-repó kész**, GitHubon: https://github.com/bttnhvs/endrody-hajmuvek (ág: `main`). A `.claude/` mappa a `.gitignore`-ban van (bejelentkezési adatok!).
 
 ## Lehetséges következő lépések
 1. Kitelepítés a `KITELEPITES.md` alapján (fiókok, GitHub-repó – ehhez a felhasználó kell)
