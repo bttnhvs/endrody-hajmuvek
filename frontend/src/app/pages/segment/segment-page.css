@@ -8,7 +8,7 @@
 
 .intro__photo {
   aspect-ratio: 4 / 5;
-  max-width: 340px;
+  max-width: 21.25rem;
   border-radius: 999px 999px var(--radius-sm) var(--radius-sm);
   overflow: hidden;
   background: var(--canvas);
@@ -94,7 +94,7 @@
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(13.75rem, 1fr));
   gap: 1.5rem;
   margin-top: 1.5rem;
 }

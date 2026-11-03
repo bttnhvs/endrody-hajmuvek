@@ -22,7 +22,7 @@
 .hero__art {
   position: relative;
   justify-self: center;
-  width: min(100%, 420px);
+  width: min(100%, 26.25rem);
 }
 
 .arch {

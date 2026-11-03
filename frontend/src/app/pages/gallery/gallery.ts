@@ -77,7 +77,7 @@ type Filter = WorkCategory | 'osszes';
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
       gap: 2rem 1.5rem;
     }
   `,

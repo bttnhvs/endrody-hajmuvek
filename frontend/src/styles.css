@@ -39,7 +39,7 @@
   --gutter: clamp(1rem, 4vw, 2.5rem);
   --section: clamp(4rem, 9vw, 7.5rem);
   --measure: 62ch;
-  --page: 1180px;
+  --page: 73.75rem; /* = 1180px 16px-es alapméretnél; rem-ben, hogy együtt skálázódjon */
   --radius-sm: 6px;
   --radius-lg: 22px;
 }
@@ -52,6 +52,21 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+}
+
+/*
+  Asztali nézetben az egész oldal 80%-os méretben – mintha a böngésző 80%-ra lenne nagyítva.
+  Hogyan működik: a `rem` mindig a <html> betűméretéhez viszonyít. Alapból ez 16px,
+  itt 80% → 12.8px, így minden rem-ben megadott méret (betűk, térközök, oldalszélesség,
+  képek) arányosan kisebb lesz. Ezért van az oldalszélesség és a képek mérete is rem-ben.
+  Százalékot adunk meg, nem px-et: ha valaki a böngészőben nagyobb alapbetűt állított be
+  (pl. gyengénlátók), az továbbra is érvényesül.
+  Mobilon/álló tableten (900px-ig, ahol a mobil elrendezés indul) marad a 100%.
+*/
+@media (min-width: 901px) {
+  html {
+    font-size: 80%;
+  }
 }
 
 body {

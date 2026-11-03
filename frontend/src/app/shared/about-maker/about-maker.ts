@@ -66,7 +66,7 @@ import { SITE } from '../../core/site.config';
     .portrait {
       position: relative;
       margin: 0;
-      width: min(100%, 400px);
+      width: min(100%, 25rem);
       justify-self: center;
     }
     .portrait::before {
@@ -125,7 +125,7 @@ import { SITE } from '../../core/site.config';
 
     /* --- Tömör változat --- */
     .about--compact {
-      grid-template-columns: 150px 1fr;
+      grid-template-columns: 9.375rem 1fr;
       gap: 2rem;
     }
     .about--compact .portrait::before {
