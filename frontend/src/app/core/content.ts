@@ -14,16 +14,17 @@ export const SEGMENTS: SegmentInfo[] = [
     categories: ['karakter', 'arcszor'],
     path: '/szinhaz',
     title: 'Színháznak',
-    heroTitle: 'Parókák, amik reflektorfényben is hihetők',
-    audience: 'Jelmeztervezőknek, színházaknak, filmes és amatőr társulatoknak.',
+    heroTitle: 'Parókák, amik reflektorfényben és kamera előtt is hihetők',
+    audience: 'Jelmeztervezőknek, színházaknak, filmes produkcióknak és amatőr társulatoknak.',
     summary:
-      'Korhű és karakterparókák tervezés alapján, gyors javítás és frissítés a meglévő parókaállományhoz.',
+      'A Szegedi Szabadtéri Játékok fodrász- és sminkrészlegének vezetőjeként tudom, mit bír ki egy paróka egy nyári évadban, és mit lát belőle a kamera közelről. Korhű és karakterparókák tervezés alapján, gyors javítás és frissítés a meglévő állományhoz.',
     offers: [
       'Új paróka a jelmezterv vagy korabeli források alapján',
       'Szakáll, bajusz és pajesz kézzel csomózott alapon',
       'Gyors csere, ha szereplőváltás van',
       'A meglévő parókaállomány javítása, mosása, újraformázása',
       'Karakterparókák bérlése iskolai és amatőr előadásokra',
+      'Forgatási munka: parókák és frizurák filmre, a kamera közelségéhez igazítva',
     ],
     priceFrom: null,
   },
@@ -36,7 +37,7 @@ export const SEGMENTS: SegmentInfo[] = [
     heroTitle: 'Paróka, amiről senki nem mondja meg, hogy paróka',
     audience: 'Akinek ritkul a haja, aki stílust váltana, vagy egyszerűen jól akarja érezni magát.',
     summary:
-      'Természetes hatású parókák a saját arcformádra, hajszínedre és életmódodra szabva.',
+      'Természetes hatású parókák a saját arcformádra, hajszínedre és életmódodra szabva – ugyanazzal a technikával, ami filmen, közeli felvételen is megállja a helyét.',
     offers: [
       'Kézzel csomózott választék és hajvonal, ami természetesen mozog',
       'Emberi haj vagy jó minőségű műhaj, a viselési szokásaidhoz igazítva',
@@ -54,7 +55,7 @@ export const SEGMENTS: SegmentInfo[] = [
     heroTitle: 'Nyugodt, diszkrét segítség, amikor elveszíted a hajad',
     audience: 'Kemoterápia, alopécia vagy más egészségi ok miatt hajukat vesztőknek.',
     summary:
-      'Diszkrét, nyugodt konzultáció, bőrbarát alapanyag és utógondozás – a kezelés alatt és után is.',
+      'Diszkrét, nyugodt konzultáció, bőrbarát alapanyag és utógondozás – a kezelés alatt és után is. Színházi és filmes parókakészítőként a legtermészetesebb hatásra törekszem.',
     offers: [
       'Négyszemközti konzultáció, igény szerint otthon vagy kórházban',
       'Már a hajhullás előtt felmérjük a régi frizurádat, hogy visszakaphasd',
@@ -156,6 +157,12 @@ export const FAQS: Faq[] = [
     answer:
       'Igen: mosás, újraformázás, csomózás javítása, színkorrekció. Színházaknak állományfrissítést is vállalok.',
     segments: ['szinhaz', 'mindennapi'],
+  },
+  {
+    question: 'Kiknek dolgoztál eddig?',
+    answer:
+      'A Szegedi Szabadtéri Játékokon a fodrász- és sminkrészleget vezetem, rendszeresen dolgozom színházaknak – többek között a Vámpírok bálja előadásain és a Pinceszínháznak –, filmforgatásokon is részt veszek. A filmes munkáim az IMDb-n is megtalálhatók.',
+    segments: ['szinhaz', 'mindennapi', 'hajpotlas'],
   },
   {
     question: 'Lehet parókát bérelni?',

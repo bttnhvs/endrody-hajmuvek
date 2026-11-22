@@ -1,7 +1,7 @@
-import { Component, booleanAttribute, input } from '@angular/core';
+import { Component, booleanAttribute, inject, input } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { SITE } from '../../core/site.config';
+import { LanguageService } from '../../core/i18n/language.service';
 
 /*
   "Rólam" blokk – a bizalomépítés egyik legerősebb eleme: a vevő látja,
@@ -44,12 +44,12 @@ import { SITE } from '../../core/site.config';
           <p class="signature">{{ about.makerName }}</p>
         }
         @if (!compact()) {
-          <ul class="tags" aria-label="Röviden rólam">
+          <ul class="tags" [attr.aria-label]="i18n.ui().about.tagsAria">
             @for (tag of about.tags; track tag) {
               <li>{{ tag }}</li>
             }
           </ul>
-          <a class="btn" routerLink="/ajanlatkeres">Írj nekem</a>
+          <a class="btn" [routerLink]="i18n.path('/ajanlatkeres')">{{ i18n.ui().about.write }}</a>
         }
       </div>
     </div>
@@ -72,8 +72,8 @@ import { SITE } from '../../core/site.config';
     .portrait::before {
       content: '';
       position: absolute;
-      inset: -14px auto auto -14px;
-      width: calc(100% + 28px);
+      inset: -0.875rem auto auto -0.875rem;
+      width: calc(100% + 1.75rem);
       aspect-ratio: 1;
       border: 2px solid var(--leaf);
       border-radius: 50%;
@@ -114,6 +114,7 @@ import { SITE } from '../../core/site.config';
       margin: 1.5rem 0 2rem;
       padding: 0;
     }
+
     .tags li {
       padding: 0.4em 0.9em;
       border-radius: 999px;
@@ -158,6 +159,9 @@ import { SITE } from '../../core/site.config';
   `,
 })
 export class AboutMaker {
-  protected readonly about = SITE.about;
+  protected readonly i18n = inject(LanguageService);
+  protected get about() {
+    return this.i18n.site().about;
+  }
   readonly compact = input(false, { transform: booleanAttribute });
 }

@@ -37,7 +37,7 @@ import { ContentService } from '../../core/content.service';
       display: block;
       font-family: var(--font-display);
       font-style: italic;
-      font-size: 3rem;
+      font-size: var(--step-number, 3rem);
       line-height: 1;
       color: var(--rose);
       margin-bottom: 0.75rem;

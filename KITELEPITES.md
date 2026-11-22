@@ -107,8 +107,8 @@ perjel nélkül a végén: `https://endrody-hajmuvek.netlify.app` → **Save** (
 
 ## Később
 
-- **Saját domain** (`hajmuvek.hu`): Netlify → Domain management; Resendben a domain hitelesítése,
-  utána `MAIL_FROM="Endrődy Hajművek <hello@hajmuvek.hu>"` és bekapcsolható a
+- **Saját domain** (`endrodywigs.com`): Netlify → Domain management; Resendben a domain hitelesítése,
+  utána `MAIL_FROM="Endrődy Hajművek <hello@endrodywigs.com>"` és bekapcsolható a
   `MAIL_CONFIRM_TO_CUSTOMER=true`. A `CORS_ORIGIN`-be ilyenkor az új címet is fel kell venni
   (vesszővel elválasztva több is megadható).
 - **Migrációk**: ha már valódi adatok vannak, `DB_SYNC=false` és TypeORM migrációk

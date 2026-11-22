@@ -40,8 +40,8 @@
   --section: clamp(4rem, 9vw, 7.5rem);
   --measure: 62ch;
   --page: 73.75rem; /* = 1180px 16px-es alapméretnél; rem-ben, hogy együtt skálázódjon */
-  --radius-sm: 6px;
-  --radius-lg: 22px;
+  --radius-sm: 0.375rem;
+  --radius-lg: 1.375rem;
 }
 
 *,
@@ -55,17 +55,36 @@ html {
 }
 
 /*
-  Asztali nézetben az egész oldal 80%-os méretben – mintha a böngésző 80%-ra lenne nagyítva.
-  Hogyan működik: a `rem` mindig a <html> betűméretéhez viszonyít. Alapból ez 16px,
-  itt 80% → 12.8px, így minden rem-ben megadott méret (betűk, térközök, oldalszélesség,
-  képek) arányosan kisebb lesz. Ezért van az oldalszélesség és a képek mérete is rem-ben.
-  Százalékot adunk meg, nem px-et: ha valaki a böngészőben nagyobb alapbetűt állított be
-  (pl. gyengénlátók), az továbbra is érvényesül.
-  Mobilon/álló tableten (900px-ig, ahol a mobil elrendezés indul) marad a 100%.
+  Az oldal alapmérete képernyőszélesség szerint.
+  A `rem` a <html> betűméretéhez viszonyít, ezért itt egyetlen értékkel arányosan
+  változik minden: betűk, térközök, képek, gombok, fejléc.
+  Százalékot adunk meg, nem px-et, így a böngészőben beállított nagyobb alapbetű
+  (pl. gyengénlátóknál) továbbra is érvényesül.
+  - 900px-ig (mobil, álló tablet): 100%
+  - 901–1199px (fekvő tablet, kis ablak): 80%, hogy érintőképernyőn se legyen apró
+  - 1200px-től (asztali gép): 72% – kompakt, de a szöveg még jól olvasható (kb. 12px).
+    Ha túl kicsi vagy nagy, csak ezt az értéket írd át.
+
+  Asztali nézetben a címek külön skálát kapnak: kisebbek, mint az alapméretből
+  következne, a folyószöveg viszont olvasható marad. A `:root` szelektor kell, mert
+  a tokenek is ott vannak megadva, és a `html` szelektor gyengébb lenne náluk.
 */
 @media (min-width: 901px) {
   html {
     font-size: 80%;
+  }
+}
+
+@media (min-width: 1200px) {
+  html {
+    font-size: 72%;
+  }
+
+  :root {
+    --step-2: 1.9rem;    /* kb. 22px */
+    --step-3: 2.7rem;    /* kb. 31px */
+    --step-4: 4.6rem;    /* kb. 53px */
+    --step-number: 2.7rem;
   }
 }
 
@@ -177,6 +196,12 @@ img {
 .btn[disabled] {
   opacity: 0.55;
   cursor: progress;
+}
+
+/* A díszítő ívek kilóghatnak a tartalomból. A `clip` levágja őket vízszintes görgetősáv
+   nélkül, és a `hidden`-nel ellentétben nem hoz létre új görgető dobozt. */
+main {
+  overflow-x: clip;
 }
 
 .visually-hidden {

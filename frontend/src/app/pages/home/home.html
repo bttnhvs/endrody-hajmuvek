@@ -1,15 +1,14 @@
+@let t = i18n.ui().home;
+@let copy = i18n.site();
+
 <!-- 1. Hős: valódi munka fotója a logó koszorújára utaló ívben -->
 <section class="hero wrap">
   <div class="hero__text">
-    <h1>Kézzel csomózott parókák színpadra és hétköznapokra</h1>
-    <p class="lead">
-      Évek óta készítek parókákat, szakállakat és bajuszokat színházi előadásokhoz.
-      Ugyanezzel a pontossággal készítek neked is: mindennapi viseletre, vagy arra az
-      időszakra, amikor elveszíted a hajad.
-    </p>
+    <h1>{{ t.h1 }}</h1>
+    <p class="lead">{{ t.lead }}</p>
     <div class="hero__actions">
-      <a class="btn" routerLink="/ajanlatkeres">Konzultációt kérek</a>
-      <a class="btn btn--ghost" routerLink="/munkaim">Munkáim</a>
+      <a class="btn" [routerLink]="i18n.path('/ajanlatkeres')">{{ i18n.ui().common.cta }}</a>
+      <a class="btn btn--ghost" [routerLink]="i18n.path('/munkaim')">{{ t.work }}</a>
     </div>
   </div>
 
@@ -20,30 +19,49 @@
         width="825"
         height="1100"
         priority
-        alt="Platinaszőke, hullámos vintage paróka a fejformán"
+        [alt]="t.heroAlt"
       />
     </div>
     <figure class="inset">
       <!-- Négyzetes keretbe vágott fekvő fotó → fill mód (lásd work-card.ts) -->
       <div class="inset__photo">
-        <img ngSrc="images/munkak/bajusz.jpg" fill alt="Sötétbarna, kunkorodó bajusz csipkealapon" />
+        <img ngSrc="images/munkak/bajusz.jpg" fill [alt]="t.insetAlt" />
       </div>
-      <figcaption>Bajusz csipkealapra csomózva</figcaption>
+      <figcaption>{{ t.insetCaption }}</figcaption>
     </figure>
+  </div>
+</section>
+
+<!-- 1/b. Szakmai referenciák: színház, szabadtér, film -->
+<section class="credits" aria-labelledby="referenciak">
+  <div class="wrap">
+    <h2 id="referenciak" class="credits__title">{{ t.credits }}</h2>
+    <ul class="credits__list">
+      @for (c of copy.credits; track c.where) {
+        <li class="credit">
+          @if (c.url) {
+            <a class="credit__where" [href]="c.url" target="_blank" rel="noopener">{{ c.where }}</a>
+          } @else {
+            <span class="credit__where">{{ c.where }}</span>
+          }
+          <span class="credit__role">{{ c.role }}</span>
+        </li>
+      }
+    </ul>
   </div>
 </section>
 
 <!-- 2. Vevőkör-választó -->
 <section class="section wrap" aria-labelledby="kinek">
-  <h2 id="kinek">Kinek készítek?</h2>
+  <h2 id="kinek">{{ t.whoFor }}</h2>
   <ul class="segments">
     @for (s of content.segments(); track s.id) {
       <li class="segment">
-        <a class="segment__link" [routerLink]="s.path">
+        <a class="segment__link" [routerLink]="i18n.path(s.path)">
           <h3 class="segment__title">{{ s.title }}</h3>
           <p class="segment__audience">{{ s.audience }}</p>
           <p>{{ s.summary }}</p>
-          <span class="segment__more">Részletek</span>
+          <span class="segment__more">{{ t.details }}</span>
         </a>
       </li>
     }
@@ -51,8 +69,23 @@
 </section>
 
 <!-- 2/b. Rólam: kivel fog találkozni a vevő -->
-<section class="section wrap" aria-label="Rólam">
+<section class="section wrap" [attr.aria-label]="t.aboutAria">
   <app-about-maker />
+</section>
+
+<!-- 2/c. Színházak, ahol dolgozott -->
+<section class="section wrap" aria-labelledby="szinhazak">
+  <h2 id="szinhazak">{{ t.theatres }}</h2>
+  <ul class="theatres">
+    @for (theatre of copy.theatres; track theatre.name) {
+      <li class="theatre">
+        <span class="theatre__name">{{ theatre.name }}</span>
+        @if (theatre.url) {
+          <a class="theatre__link" [href]="theatre.url" target="_blank" rel="noopener">{{ theatre.linkLabel }}</a>
+        }
+      </li>
+    }
+  </ul>
 </section>
 
 <!-- 3. Bizalomépítés: a színházi munka mint bizonyíték -->
@@ -63,17 +96,14 @@
       ngSrc="images/munkak/rokoko-parokapar.jpg"
       width="1100"
       height="825"
-      alt="Két rokokó paróka: egy púderszőke és egy ősz, sűrű fürtökkel"
+      [alt]="t.proofAlt"
     />
     <div>
-      <p class="proof__quote">
-        A színpadon egy parókának két méterről, reflektorfényben is hihetőnek kell lennie.
-        Ezt a mércét hozom el a hétköznapi parókákba is.
-      </p>
+      <p class="proof__quote">{{ t.proofQuote }}</p>
       <ul class="proof__facts">
-        <li><strong>Kézi csomózás</strong> szálanként, természetes választékkal</li>
-        <li><strong>A te fejformádra</strong> készül, nem polcról levett méret</li>
-        <li><strong>Utógondozás</strong>: mosás, javítás, frissítés évekig</li>
+        @for (fact of t.facts; track fact.strong) {
+          <li><strong>{{ fact.strong }}</strong>{{ fact.rest }}</li>
+        }
       </ul>
     </div>
   </div>
@@ -81,15 +111,15 @@
 
 <!-- 4. Folyamat -->
 <section class="section wrap" aria-labelledby="folyamat">
-  <h2 id="folyamat">Így készül a parókád</h2>
+  <h2 id="folyamat">{{ t.process }}</h2>
   <app-process-steps />
 </section>
 
 <!-- 5. A műhelyből: a kézművesség bizonyítéka -->
 <section class="workshop" aria-labelledby="muhely">
   <div class="wrap">
-    <h2 id="muhely">A műhelyből</h2>
-    <p class="lead">Egy paróka több tízezer egyenként befűzött hajszálból áll. Így néz ki közben.</p>
+    <h2 id="muhely">{{ t.workshop }}</h2>
+    <p class="lead">{{ t.workshopLead }}</p>
     <div class="workshop__grid">
       @for (item of workshop(); track item.id) {
         <app-work-card [item]="item" />
@@ -101,8 +131,8 @@
 <!-- 6. Munkák -->
 <section class="section wrap" aria-labelledby="munkak">
   <div class="section-head">
-    <h2 id="munkak">Néhány munkám</h2>
-    <a routerLink="/munkaim">Az összes munka</a>
+    <h2 id="munkak">{{ t.someWork }}</h2>
+    <a [routerLink]="i18n.path('/munkaim')">{{ t.allWork }}</a>
   </div>
   <div class="gallery">
     @for (item of featured(); track item.id) {
@@ -111,15 +141,41 @@
   </div>
 </section>
 
+<!-- 6/b. Etsy-bolt: cosplay, rokokó és Vámpírok bálja stílusú darabok -->
+<section class="shop" aria-labelledby="etsy-bolt">
+  <div class="wrap shop__inner">
+    <div>
+      <h2 id="etsy-bolt">{{ copy.shop.heading }}</h2>
+      <p class="lead">{{ copy.shop.text }}</p>
+      @if (site.etsy) {
+        <a class="btn" [href]="site.etsy" target="_blank" rel="noopener">{{ t.shopGo }}</a>
+      } @else {
+        <a class="btn" [routerLink]="i18n.path('/ajanlatkeres')">{{ t.shopAsk }}</a>
+      }
+    </div>
+    <ul class="shop__list">
+      @for (c of copy.shop.categories; track c.title) {
+        <li class="shop__item">
+          <h3>{{ c.title }}</h3>
+          <p>{{ c.text }}</p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
 <!-- 7. GYIK -->
 <section class="section wrap" aria-labelledby="gyik">
-  <h2 id="gyik">Gyakori kérdések</h2>
+  <h2 id="gyik">{{ t.faq }}</h2>
   <app-faq-list [faqs]="topFaqs()" />
 </section>
 
+<!-- 7/b. Workshopok: csendes blokk az oldal alján, hogy ne vegye el a figyelmet a rendelésről -->
+<app-workshop-teaser />
+
 <!-- 8. Záró felhívás -->
 <section class="wrap closing">
-  <h2>Beszéljük meg, milyen parókára van szükséged</h2>
-  <p class="lead">Az első beszélgetés ingyenes, és semmire nem kötelez.</p>
-  <a class="btn" routerLink="/ajanlatkeres">Konzultációt kérek</a>
+  <h2>{{ t.closingTitle }}</h2>
+  <p class="lead">{{ t.closingLead }}</p>
+  <a class="btn" [routerLink]="i18n.path('/ajanlatkeres')">{{ i18n.ui().common.cta }}</a>
 </section>

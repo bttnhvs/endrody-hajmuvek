@@ -64,6 +64,19 @@ Részletes magyarázat: `frontend/TANULAS.md`, `backend/TANULAS-BACKEND.md`.
   `https://hajmuvek-api.onrender.com/api`, `angular.json` fileReplacements). Az űrlap 4 mp után
   „Még dolgozom rajta” üzenetet mutat (Render cold start). 
 - 2026-10-30: **git-repó kész**, GitHubon: https://github.com/bttnhvs/endrody-hajmuvek (ág: `main`). A `.claude/` mappa a `.gitignore`-ban van (bejelentkezési adatok!).
+- 2026-11-11: **élesben fut.** Frontend: https://e-hajmuvek.netlify.app (Netlify, a `main` ágról
+  automatikusan települ). Backend: https://hajmuvek-api.onrender.com/api (Render Blueprint, Neon DB).
+  A CORS (`CORS_ORIGIN`) a Netlify-címre van állítva, ellenőrizve. Az élő űrlap- és admin-próba
+  (KITELEPITES.md 6. lépés) még hátravan; a Resend beállítása bizonytalan.
+- 2026-11-22: **angol változat** (`/en`, `/en/theatre`, `/en/everyday`, `/en/hair-loss`, `/en/work`,
+  `/en/contact`), külső csomag nélkül: `frontend/src/app/core/i18n/` (`LanguageService`, `ui.ts`,
+  `site.en.ts`, `content.en.ts`, `en.routes.ts`). Szövegmódosításkor mindkét nyelvet frissíteni kell.
+  Az admin csak magyar. Az OFA-szöveg angol oldalon is magyarul marad, alatta a fordítással.
+- 2026-11-22: márkanév nyelvenként: magyarul **Endrődy Hajművek**, angolul **Endrődy Wigs** (`SITE.name`,
+  `SITE_EN.name`). Domain: **endrodywigs.com**, e-mail: **hello@endrodywigs.com**. A domain ekkor még nem élt
+  (nincs DNS/MX), bekötése után a Render `CORS_ORIGIN`-be is fel kell venni.
+- 2026-11-22: **workshop-blokk** a főoldal alján (`shared/workshop-teaser`), feliratkozás Formspree-vel.
+  A `SITE.workshopFormspreeId` még üres: élesben addig az űrlap helyett egy ajánlatkérő link látszik.
 
 ## Lehetséges következő lépések
 1. Kitelepítés a `KITELEPITES.md` alapján (fiókok, GitHub-repó – ehhez a felhasználó kell)

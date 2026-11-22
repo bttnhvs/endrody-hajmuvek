@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, input, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, input, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
@@ -6,6 +6,7 @@ import { INQUIRY_TYPES } from '../../core/inquiry-labels';
 import { InquiryService } from '../../core/inquiry.service';
 import { InquiryType } from '../../core/models';
 import { SITE } from '../../core/site.config';
+import { LanguageService } from '../../core/i18n/language.service';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
@@ -27,11 +28,15 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
 export class InquiryPage implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly inquiries = inject(InquiryService);
+  protected readonly i18n = inject(LanguageService);
 
   /** ?tipus=hajpotlas */
   readonly tipus = input<string>();
 
-  protected readonly types = INQUIRY_TYPES;
+  /** A típusok azonosítója közös, a felirat az aktuális nyelvet követi. */
+  protected readonly types = computed(() =>
+    INQUIRY_TYPES.map((t) => ({ id: t.id, label: this.i18n.ui().inquiry.types[t.id] })),
+  );
   protected readonly site = SITE;
   protected readonly tel = SITE.phone.replace(/\s/g, '');
   protected readonly status = signal<Status>('idle');

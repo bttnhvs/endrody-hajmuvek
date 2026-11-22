@@ -2,6 +2,7 @@ import { Component, computed, inject, input } from '@angular/core';
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ContentService } from '../../core/content.service';
+import { LanguageService } from '../../core/i18n/language.service';
 import { Segment } from '../../core/models';
 import { WorkCard } from '../../shared/work-card/work-card';
 import { FaqList } from '../../shared/faq-list/faq-list';
@@ -24,6 +25,7 @@ import { AboutMaker } from '../../shared/about-maker/about-maker';
 })
 export class SegmentPage {
   private readonly content = inject(ContentService);
+  protected readonly i18n = inject(LanguageService);
 
   readonly segment = input.required<Segment>();
 

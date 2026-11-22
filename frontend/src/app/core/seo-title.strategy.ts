@@ -1,6 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { DOCUMENT, Injectable, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
+import { alternatePath, langOf } from './i18n/paths';
+import { SITE_EN } from './i18n/site.en';
 import { SITE } from './site.config';
 
 /*
@@ -17,10 +19,15 @@ import { SITE } from './site.config';
 export class SeoTitleStrategy extends TitleStrategy {
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
+  private readonly doc = inject(DOCUMENT);
 
   override updateTitle(snapshot: RouterStateSnapshot): void {
     const pageTitle = this.buildTitle(snapshot);
-    this.title.setTitle(pageTitle ? `${pageTitle} – ${SITE.name}` : `${SITE.name} – ${SITE.tagline}`);
+    const lang = langOf(snapshot.url);
+    const { name, tagline } = lang === 'en' ? SITE_EN : SITE;
+    this.title.setTitle(pageTitle ? `${pageTitle} – ${name}` : `${name} – ${tagline}`);
+    // A képernyőolvasók és a böngésző fordítója ebből tudják az oldal nyelvét.
+    this.doc.documentElement.lang = lang;
 
     // A legmélyebb aktív route `data`-jából olvassuk a leírást.
     let route = snapshot.root;
@@ -40,5 +47,34 @@ export class SeoTitleStrategy extends TitleStrategy {
     } else {
       this.meta.removeTag("name='robots'");
     }
+
+    const indexable = !route.data['noindex'] && route.routeConfig?.path !== '**';
+    this.updateLanguageLinks(snapshot.url, indexable);
+  }
+
+  /*
+    A hreflang linkek mondják meg a Google-nek, hogy a magyar és az angol oldal
+    ugyanannak a tartalomnak két nyelvi változata, így nem számít duplikált tartalomnak.
+  */
+  private updateLanguageLinks(url: string, indexable: boolean): void {
+    this.doc.head.querySelectorAll('link[data-lang-link]').forEach((el) => el.remove());
+    if (!indexable) return;
+
+    const path = url.split(/[?#]/)[0];
+    const other = alternatePath(path);
+    const [huPath, enPath] = langOf(path) === 'hu' ? [path, other] : [other, path];
+    const origin = this.doc.location.origin;
+
+    this.addLink({ rel: 'canonical', href: origin + path });
+    this.addLink({ rel: 'alternate', hreflang: 'hu', href: origin + huPath });
+    this.addLink({ rel: 'alternate', hreflang: 'en', href: origin + enPath });
+    this.addLink({ rel: 'alternate', hreflang: 'x-default', href: origin + huPath });
+  }
+
+  private addLink(attributes: Record<string, string>): void {
+    const link = this.doc.createElement('link');
+    link.setAttribute('data-lang-link', '');
+    Object.entries(attributes).forEach(([name, value]) => link.setAttribute(name, value));
+    this.doc.head.appendChild(link);
   }
 }

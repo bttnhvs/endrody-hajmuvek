@@ -1,5 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, computed, inject } from '@angular/core';
 import { CATEGORY_LABELS, FAQS, GALLERY, PROCESS, SEGMENTS } from './content';
+import { CATEGORY_LABELS_EN, FAQS_EN, GALLERY_EN, PROCESS_EN, SEGMENTS_EN } from './i18n/content.en';
+import { LanguageService } from './i18n/language.service';
 import { Faq, GalleryItem, Segment, SegmentInfo, WorkCategory } from './models';
 
 /*
@@ -15,11 +17,15 @@ import { Faq, GalleryItem, Segment, SegmentInfo, WorkCategory } from './models';
 */
 @Injectable({ providedIn: 'root' })
 export class ContentService {
-  readonly segments = signal<SegmentInfo[]>(SEGMENTS).asReadonly();
-  readonly process = signal(PROCESS).asReadonly();
-  readonly gallery = signal(GALLERY).asReadonly();
-  readonly faqs = signal(FAQS).asReadonly();
-  readonly categoryLabels = CATEGORY_LABELS;
+  private readonly language = inject(LanguageService);
+  private readonly isEnglish = computed(() => this.language.lang() === 'en');
+
+  // computed: nyelvváltáskor minden sablon, ami ezeket olvassa, magától frissül.
+  readonly segments = computed<SegmentInfo[]>(() => (this.isEnglish() ? SEGMENTS_EN : SEGMENTS));
+  readonly process = computed(() => (this.isEnglish() ? PROCESS_EN : PROCESS));
+  readonly gallery = computed(() => (this.isEnglish() ? GALLERY_EN : GALLERY));
+  readonly faqs = computed(() => (this.isEnglish() ? FAQS_EN : FAQS));
+  readonly categoryLabels = computed(() => (this.isEnglish() ? CATEGORY_LABELS_EN : CATEGORY_LABELS));
 
   segment(id: Segment): SegmentInfo {
     // A `!` azt mondja a TS-nek: biztosan van ilyen elem (a típus garantálja).

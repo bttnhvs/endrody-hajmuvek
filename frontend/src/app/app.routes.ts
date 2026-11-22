@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './core/admin/admin.guard';
+import { EN_ROUTES } from './core/i18n/en.routes';
 
 /*
   Útvonalak.
@@ -11,12 +12,14 @@ import { adminGuard } from './core/admin/admin.guard';
   csak más `data.segment` értékkel – nem írunk háromszor ugyanolyan kódot.
 */
 export const routes: Routes = [
+  // Az angol oldalak az /en alatt (lásd core/i18n/en.routes.ts).
+  { path: 'en', children: EN_ROUTES },
   {
     path: '',
     title: '',
     data: {
       description:
-        'Kézzel készült, egyedi parókák színházaknak, mindennapi viseletre és hajvesztés esetére. Budapest.',
+        'Kézzel csomózott parókák a Szegedi Szabadtéri Játékok fodrász- és sminkrészlegének vezetőjétől: színházaknak, filmeknek, mindennapi viseletre és hajvesztés esetére. Szeged és Budapest.',
     },
     loadComponent: () => import('./pages/home/home').then((m) => m.Home),
   },
@@ -25,7 +28,7 @@ export const routes: Routes = [
     title: 'Parókák színházaknak',
     data: {
       segment: 'szinhaz',
-      description: 'Korhű és karakterparókák tervezés alapján, parókaállomány javítása és bérlés.',
+      description: 'Korhű és karakterparókák színházaknak és filmes produkcióknak, parókaállomány javítása és bérlés – a Szegedi Szabadtéri Játékok fodrász- és sminkrészlegének vezetőjétől.',
     },
     loadComponent: () => import('./pages/segment/segment-page').then((m) => m.SegmentPage),
   },
@@ -50,7 +53,7 @@ export const routes: Routes = [
   {
     path: 'munkaim',
     title: 'Munkáim',
-    data: { description: 'Válogatás színházi és mindennapi parókáimból.' },
+    data: { description: 'Válogatás színházi, filmes és mindennapi parókáimból, szakállaimból.' },
     loadComponent: () => import('./pages/gallery/gallery').then((m) => m.Gallery),
   },
   {

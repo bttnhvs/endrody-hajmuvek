@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SiteHeader } from './shared/site-header/site-header';
 import { SiteFooter } from './shared/site-footer/site-footer';
+import { LanguageService } from './core/i18n/language.service';
 
 /*
   Gyökérkomponens: a fejléc és lábléc mindig látszik,
@@ -11,7 +12,7 @@ import { SiteFooter } from './shared/site-footer/site-footer';
   selector: 'app-root',
   imports: [RouterOutlet, SiteHeader, SiteFooter],
   template: `
-    <a class="skip-link" href="#tartalom">Ugrás a tartalomra</a>
+    <a class="skip-link" href="#tartalom">{{ i18n.ui().common.skip }}</a>
     <app-site-header />
     <main id="tartalom" tabindex="-1">
       <router-outlet />
@@ -44,4 +45,6 @@ import { SiteFooter } from './shared/site-footer/site-footer';
     }
   `,
 })
-export class App {}
+export class App {
+  protected readonly i18n = inject(LanguageService);
+}

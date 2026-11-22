@@ -1,4 +1,4 @@
-# Hajművek API – tanulási útmutató (NestJS)
+# Endrődy Hajművek API – tanulási útmutató (NestJS)
 
 Ez a fájl végigvezet a backenden. Angular-fejlesztőként sok minden ismerős lesz:
 a NestJS szándékosan az Angular felépítését követi. Ahol lehet, párhuzamot vonok.
@@ -237,8 +237,8 @@ csak kiírja a konzolra („száraz mód”).
 - Domain nélkül a feladó `onboarding@resend.dev`, és a levél **csak a Resend-fiók saját címére**
   mehet. Ezért a fiókot a barátnőm címével kell regisztrálni (ez a `MAIL_TO`). Az értesítő így
   működik, a vevőnek szóló visszaigazolás viszont nem.
-- Ha a domain (pl. `hajmuvek.hu`) a Resendben ellenőrizve van (néhány DNS-rekordot kell
-  felvenni), a `MAIL_FROM` lehet `hello@hajmuvek.hu`, és bekapcsolható a
+- Ha a domain (pl. `endrodywigs.com`) a Resendben ellenőrizve van (néhány DNS-rekordot kell
+  felvenni), a `MAIL_FROM` lehet `hello@endrodywigs.com`, és bekapcsolható a
   `MAIL_CONFIRM_TO_CUSTOMER=true`.
 
 **A Resend kliens nem dob kivételt hibánál**, hanem `{ data, error }` objektumot ad vissza

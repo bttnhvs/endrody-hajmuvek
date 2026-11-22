@@ -1,5 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ContentService } from '../../core/content.service';
+import { LanguageService } from '../../core/i18n/language.service';
 import { WorkCategory } from '../../core/models';
 import { WorkCard } from '../../shared/work-card/work-card';
 
@@ -15,14 +16,12 @@ type Filter = WorkCategory | 'osszes';
   selector: 'app-gallery',
   imports: [WorkCard],
   template: `
+    @let t = i18n.ui().gallery;
     <section class="wrap intro">
-      <h1>Munkáim</h1>
-      <p class="lead">
-        Színpadi és karakterparókák, természetes hatású parókák, szakállak és bajuszok –
-        és néhány pillanat a műhelyből.
-      </p>
+      <h1>{{ t.title }}</h1>
+      <p class="lead">{{ t.lead }}</p>
 
-      <div class="filters" role="group" aria-label="Szűrés a munka típusa szerint">
+      <div class="filters" role="group" [attr.aria-label]="t.filterAria">
         @for (f of filters(); track f.id) {
           <button
             type="button"
@@ -84,6 +83,7 @@ type Filter = WorkCategory | 'osszes';
 })
 export class Gallery {
   private readonly content = inject(ContentService);
+  protected readonly i18n = inject(LanguageService);
 
   protected readonly active = signal<Filter>('osszes');
 
@@ -96,10 +96,10 @@ export class Gallery {
   /** A szűrőgombok a darabszámmal – a kategóriák listája a címkékből jön. */
   protected readonly filters = computed(() => {
     const all = this.content.gallery();
-    const labels = this.content.categoryLabels;
+    const labels = this.content.categoryLabels();
     const categories = Object.keys(labels) as WorkCategory[];
     return [
-      { id: 'osszes' as Filter, label: 'Összes', count: all.length },
+      { id: 'osszes' as Filter, label: this.i18n.ui().gallery.all, count: all.length },
       ...categories.map((c) => ({
         id: c as Filter,
         label: labels[c],

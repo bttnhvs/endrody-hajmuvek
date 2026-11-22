@@ -1,10 +1,16 @@
+@let t = i18n.ui();
+
 <header class="header" [class.header--open]="menuOpen()">
   <div class="wrap bar">
-    <a class="brand" routerLink="/" aria-label="{{ site.name }} {{ site.subtitle }} – főoldal">
+    <a
+      class="brand"
+      [routerLink]="i18n.path('/')"
+      [attr.aria-label]="i18n.site().name + ' ' + i18n.site().subtitle + ' – ' + t.nav.homeAria"
+    >
       <img class="brand__logo" [src]="site.logo" alt="" width="46" height="50" />
       <span class="brand__text">
-        <span class="brand__name">{{ site.name }}</span>
-        <span class="brand__sub">{{ site.subtitle }}</span>
+        <span class="brand__name">{{ i18n.site().name }}</span>
+        <span class="brand__sub">{{ i18n.site().subtitle }}</span>
       </span>
     </a>
 
@@ -15,12 +21,12 @@
       aria-controls="fomenu"
       (click)="toggleMenu()"
     >
-      {{ menuOpen() ? 'Bezárás' : 'Menü' }}
+      {{ menuOpen() ? t.nav.close : t.nav.menu }}
     </button>
 
-    <nav id="fomenu" class="nav" aria-label="Főmenü">
+    <nav id="fomenu" class="nav" [attr.aria-label]="t.nav.main">
       <ul>
-        @for (link of links; track link.path) {
+        @for (link of links(); track link.path) {
           <li>
             <a
               [routerLink]="link.path"
@@ -29,8 +35,21 @@
             >{{ link.label }}</a>
           </li>
         }
+        @if (site.etsy) {
+          <li><a [href]="site.etsy" target="_blank" rel="noopener">{{ t.common.etsy }}</a></li>
+        }
       </ul>
-      <a class="btn nav__cta" routerLink="/ajanlatkeres">Konzultációt kérek</a>
+      <a class="btn nav__cta" [routerLink]="i18n.path('/ajanlatkeres')">{{ t.common.cta }}</a>
+      <!-- Nyelvváltó: ugyanarra az oldalra visz a másik nyelven, a query paraméterek megmaradnak. -->
+      @if (!i18n.isAdmin()) {
+        <a
+          class="lang"
+          [routerLink]="i18n.switchPath()"
+          queryParamsHandling="preserve"
+          [attr.hreflang]="i18n.lang() === 'hu' ? 'en' : 'hu'"
+          [attr.aria-label]="t.nav.switchAria"
+        >{{ t.nav.switchLabel }}</a>
+      }
     </nav>
   </div>
 </header>

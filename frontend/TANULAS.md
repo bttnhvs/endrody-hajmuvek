@@ -1,4 +1,4 @@
-# Hajművek – tanulási útmutató
+# Endrődy Hajművek – tanulási útmutató
 
 Ez a fájl végigvezet a projekten: mit miért csináltam, és mit érdemes belőle megtanulni.
 Javaslat: nyisd meg mellé VS Code-ban a hivatkozott fájlokat, és olvasd párhuzamosan.
@@ -268,7 +268,7 @@ Az Angular gyári `TitleStrategy`-ját lecseréltük egy sajátra (`app.config.t
 { provide: TitleStrategy, useClass: SeoTitleStrategy }
 ```
 Ez a DI egyik legszebb tulajdonsága: egy beépített viselkedést a saját osztályoddal cserélsz le.
-Minden oldalváltáskor beállítja a címet ("Parókák színházaknak – Hajművek") és a meta descriptiont.
+Minden oldalváltáskor beállítja a címet ("Parókák színházaknak – Endrődy Hajművek") és a meta descriptiont.
 
 **Következő szint:** `ng add @angular/ssr` → prerendering. Ekkor minden oldal kész HTML-ként
 kerül a szerverre, a Google azonnal látja a tartalmat, és az első betöltés is gyorsabb.
@@ -318,7 +318,7 @@ Sorrendben, egyre nehezebbek:
    és a gombok `routerLink`-et kapjanak `[queryParams]`-szal.
 6. **Tesztek**: `ContentService.faqsFor()`, a galéria `visible` computed-ja, az űrlap validációja.
 7. **Prerender/SSR**: `ng add @angular/ssr`.
-8. **Deploy**: Netlify, Vercel vagy Firebase Hosting – mindegyik ingyenes kis oldalra. Saját domain (pl. hajmuvek.hu).
+8. **Deploy**: Netlify, Vercel vagy Firebase Hosting – mindegyik ingyenes kis oldalra. Saját domain (pl. endrodywigs.com).
 9. **Frissítés a legújabb Angularra** (`ng update`) és zoneless mód kipróbálása.
 
 ---

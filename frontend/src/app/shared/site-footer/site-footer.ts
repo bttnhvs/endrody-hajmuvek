@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SITE } from '../../core/site.config';
+import { LanguageService } from '../../core/i18n/language.service';
 
 @Component({
   selector: 'app-site-footer',
@@ -11,33 +12,43 @@ import { SITE } from '../../core/site.config';
         <div class="brand">
           <img [src]="site.logo" alt="" width="64" height="70" />
           <div>
-            <p class="name">{{ site.name }}</p>
-            <p class="muted">{{ site.subtitle }} · {{ site.city }}</p>
+            <p class="name">{{ i18n.site().name }}</p>
+            <p class="muted">{{ i18n.site().subtitle }} · {{ i18n.site().city }}</p>
           </div>
         </div>
         <div>
-          <p class="label">Elérhetőség</p>
+          <p class="label">{{ i18n.ui().footer.contact }}</p>
           <p>
             <a [href]="'mailto:' + site.email">{{ site.email }}</a><br />
             <a [href]="'tel:' + tel">{{ site.phone }}</a>
           </p>
         </div>
         <div>
-          <p class="label">Kövess</p>
+          <p class="label">{{ i18n.ui().footer.follow }}</p>
           <p>
             <a [href]="site.facebook" target="_blank" rel="noopener">Facebook</a>
             @if (site.instagram) {
               <br /><a [href]="site.instagram" target="_blank" rel="noopener">Instagram</a>
             }
+            @if (site.imdb) {
+              <br /><a [href]="site.imdb" target="_blank" rel="noopener">IMDb</a>
+            }
+            @if (site.etsy) {
+              <br /><a [href]="site.etsy" target="_blank" rel="noopener">{{ i18n.ui().common.etsy }}</a>
+            }
           </p>
         </div>
         <div>
-          <a class="btn btn--light" routerLink="/ajanlatkeres">Konzultációt kérek</a>
+          <a class="btn btn--light" [routerLink]="i18n.path('/ajanlatkeres')">{{ i18n.ui().common.cta }}</a>
         </div>
       </div>
       <div class="wrap fine">
+        <!-- A kötelező támogatói szöveg magyarul mindig látszik, angolul a fordítása is. -->
         <p class="funding">{{ site.fundingNotice }}</p>
-        <p>© {{ year }} {{ site.name }} {{ site.subtitle }}</p>
+        @if (i18n.ui().footer.fundingTranslation; as translation) {
+          <p class="funding" lang="en">{{ translation }}</p>
+        }
+        <p>© {{ year }} {{ i18n.site().name }} {{ i18n.site().subtitle }}</p>
       </div>
     </footer>
   `,
@@ -63,9 +74,9 @@ import { SITE } from '../../core/site.config';
     .brand img {
       background: #fff;
       border-radius: 50%;
-      padding: 6px;
-      width: 72px;
-      height: 72px;
+      padding: 0.375rem;
+      width: 4.5rem;
+      height: 4.5rem;
       object-fit: contain;
     }
     .name {
@@ -109,6 +120,7 @@ import { SITE } from '../../core/site.config';
 })
 export class SiteFooter {
   protected readonly site = SITE;
+  protected readonly i18n = inject(LanguageService);
   protected readonly tel = SITE.phone.replace(/\s/g, '');
   protected readonly year = new Date().getFullYear();
 }
