@@ -22,7 +22,12 @@ export interface SiteText {
     text: string;
     categories: readonly { title: string; text: string }[];
   };
-  credits: readonly { where: string; role: string; url: string }[];
+  credits: readonly {
+    where: string;
+    role: string;
+    url: string;
+    link?: { label: string; url: string };
+  }[];
 }
 
 /* A linkek és képek a magyar SITE-ból jönnek, így csak egy helyen kell őket átírni. */
@@ -38,7 +43,7 @@ export const SITE_EN: SiteText = {
       'I am a hairdresser and wigmaker. I lead the hair and make-up department of the Szeged Open-Air Festival, work regularly for theatres, including productions of Dance of the Vampires, and on film sets. Stage and screen taught me how much a hand-knotted hairline matters.',
       'In my own workshop in Szeged, I bring the same care to everyday wigs and wigs for hair loss, and I often work in Budapest too. From the first conversation to the final fitting, you will be talking to me.',
     ],
-    tags: ['Hairdresser', 'Theatre and film wigmaker', 'Rococo specialist', 'Hand-knotting', 'Szeged', 'Budapest'],
+    tags: ['Hairdresser', 'Key hairstylist', 'Hair designer', 'Theatre and film wigmaker', 'Rococo specialist', 'Hand-knotting', 'Szeged', 'Budapest'],
     imageAlt:
       'Illustration: a wigmaker with short blonde hair in her workshop, next to a curly brown wig on a block',
   },
@@ -59,8 +64,13 @@ export const SITE_EN: SiteText = {
   },
   credits: [
     { where: 'Szeged Open-Air Festival', role: 'Head of the hair and make-up department', url: SITE.credits[0].url },
-    { where: 'Dance of the Vampires', role: 'Hairdresser, wigs and hairstyles', url: SITE.credits[1].url },
+    { where: 'Dance of the Vampires', role: 'Key hairstylist, hair designer', url: SITE.credits[1].url },
     { where: 'Szeged National Theatre', role: 'Former head of the hair department', url: SITE.credits[2].url },
-    { where: 'Film and television', role: 'Hairdresser and wigmaker on set – film credits on IMDb', url: SITE.credits[3].url },
+    {
+      where: 'Film and television',
+      role: 'Key hairstylist',
+      url: SITE.credits[3].url,
+      link: { label: 'film credits on IMDb', url: SITE.imdb },
+    },
   ],
 };

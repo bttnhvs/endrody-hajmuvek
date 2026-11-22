@@ -44,7 +44,7 @@
           } @else {
             <span class="credit__where">{{ c.where }}</span>
           }
-          <span class="credit__role">{{ c.role }}</span>
+          <span class="credit__role">{{ c.role }}@if (c.link; as link) { – <a [href]="link.url" target="_blank" rel="noopener">{{ link.label }}</a>}</span>
         </li>
       }
     </ul>

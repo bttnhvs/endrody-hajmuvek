@@ -1,5 +1,7 @@
 import { environment } from '../../environments/environment';
 
+const IMDB_URL = 'https://www.imdb.com/name/nm9991615/bio/';
+
 /*
   Az oldal "beállításai" – a barátnőddel együtt töltsétek ki!
   Minden, ami TODO-val van jelölve, helykitöltő.
@@ -15,7 +17,7 @@ export const SITE = {
   phone: '+36 30 000 0000',
   facebook: 'https://www.facebook.com/hajmuvek',
   instagram: 'https://www.instagram.com/hajmuvek/',
-  imdb: 'https://www.imdb.com/name/nm9991615/bio/',
+  imdb: IMDB_URL,
   // TODO: az Etsy-bolt címe, pl. 'https://www.etsy.com/shop/BoltNeve'.
   // Amíg üres, a menüben és a láblécben nincs link, a főoldali gomb az ajánlatkérésre visz.
   etsy: '',
@@ -43,7 +45,7 @@ export const SITE = {
       'A saját szegedi műhelyemben ugyanezzel a gondossággal készítem a mindennapi és a hajvesztés miatti parókákat is, és gyakran dolgozom Budapesten is. Az első beszélgetéstől az utolsó igazításig velem beszélsz.',
     ],
     /** Rövid címkék a szöveg alatt. TODO: igazítsátok a valósághoz. */
-    tags: ['Fodrász', 'Színházi és filmes parókakészítő', 'Rokokó specialista', 'Kézi csomózás', 'Szeged', 'Budapest'],
+    tags: ['Fodrász', 'Key hairstylist', 'Hair designer', 'Színházi és filmes parókakészítő', 'Rokokó specialista', 'Kézi csomózás', 'Szeged', 'Budapest'],
     image: 'images/rolam-illusztracio.svg',
     imageAlt:
       'Illusztráció: rövid, vagány, szőke hajú parókakészítő a műhelyében, mellette egy barna, göndör paróka a fejformán',
@@ -90,7 +92,7 @@ export const SITE = {
     },
     {
       where: 'Vámpírok bálja',
-      role: 'Fodrász, parókák és frizurák',
+      role: 'Key hairstylist, hair designer',
       url: '',
     },
     {
@@ -100,8 +102,10 @@ export const SITE = {
     },
     {
       where: 'Film és televízió',
-      role: 'Fodrász és parókakészítő forgatásokon – a filmes munkák az IMDb-n',
-      url: '', // TODO: IMDb-profil linkje
+      role: 'Key hairstylist',
+      url: '',
+      // A szerep után megjelenő link (a `url` ezzel szemben a cím egészét teszi linkké).
+      link: { label: 'a filmes munkák az IMDb-n', url: IMDB_URL },
     },
   ],
 
