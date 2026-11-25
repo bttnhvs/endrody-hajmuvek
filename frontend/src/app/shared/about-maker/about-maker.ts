@@ -11,9 +11,10 @@ import { LanguageService } from '../../core/i18n/language.service';
   (íves képkeret, a logó koszorújára utaló zöld ív), így nem különálló
   doboznak, hanem az oldal részének hat.
 
-  Két helyen használjuk:
-  - főoldal: teljes változat (címkék, gomb)
-  - "Hajvesztés esetén" oldal: `compact` változat (kis kép, egy bekezdés)
+  Változatok:
+  - teljes (címkék, gomb) – a főoldalon
+  - `compact` (kis kép, egy bekezdés) – most nincs használatban, a megszűnt
+    hajpótlás-oldalon volt; megtartottuk, ha később kellene egy rövid változat
 
   <app-about-maker />            → teljes
   <app-about-maker compact />    → tömör (a puszta attribútum '' értéket adna;

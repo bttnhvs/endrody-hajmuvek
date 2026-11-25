@@ -19,7 +19,7 @@ export const routes: Routes = [
     title: '',
     data: {
       description:
-        'Kézzel csomózott parókák a Szegedi Szabadtéri Játékok fodrász- és sminkrészlegének vezetőjétől: színházaknak, filmeknek, mindennapi viseletre és hajvesztés esetére. Szeged és Budapest.',
+        'Parókák, pótrészek, szakállak és bajuszok színházaknak, filmeknek és a mindennapokra, valamint meglévő parókák átalakítása és stylingja. Szeged és Budapest.',
     },
     loadComponent: () => import('./pages/home/home').then((m) => m.Home),
   },
@@ -28,7 +28,7 @@ export const routes: Routes = [
     title: 'Parókák színházaknak',
     data: {
       segment: 'szinhaz',
-      description: 'Korhű és karakterparókák színházaknak és filmes produkcióknak, parókaállomány javítása és bérlés – a Szegedi Szabadtéri Játékok fodrász- és sminkrészlegének vezetőjétől.',
+      description: 'Korhű és karakterparókák, szakállak és bajuszok színházaknak és filmes produkcióknak, valamint a meglévő parókaállomány javítása és átalakítása.',
     },
     loadComponent: () => import('./pages/segment/segment-page').then((m) => m.SegmentPage),
   },
@@ -37,19 +37,24 @@ export const routes: Routes = [
     title: 'Parókák mindennapra',
     data: {
       segment: 'mindennapi',
-      description: 'Természetes hatású, kézzel csomózott parókák a saját arcformádra szabva.',
+      description: 'Természetes hatású parókák a saját arcformádra szabva, valamint meglévő parókák átalakítása, méretre igazítása és új frizurája.',
     },
     loadComponent: () => import('./pages/segment/segment-page').then((m) => m.SegmentPage),
   },
   {
-    path: 'hajpotlas',
-    title: 'Paróka hajvesztés esetén',
+    path: 'styling',
+    title: 'Styling és alkalmi frizurák',
     data: {
-      segment: 'hajpotlas',
-      description: 'Diszkrét konzultáció és bőrbarát parókák kemoterápia vagy alopécia esetén.',
+      segment: 'styling',
+      description: 'Új frizura a meglévő parókádra, valamint alkalmi és korhű frizurák parókára és pótrészre.',
     },
     loadComponent: () => import('./pages/segment/segment-page').then((m) => m.SegmentPage),
   },
+  /*
+    A hajpótlás-oldal megszűnt, de élesben futott, ezért lehetnek rá mutató linkek és
+    Google-találatok. Az átirányítással ezek nem 404-es oldalra, hanem a Mindennapra oldalra visznek.
+  */
+  { path: 'hajpotlas', redirectTo: 'mindennapi' },
   {
     path: 'munkaim',
     title: 'Munkáim',

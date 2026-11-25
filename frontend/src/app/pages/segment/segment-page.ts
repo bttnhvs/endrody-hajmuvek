@@ -7,7 +7,6 @@ import { Segment } from '../../core/models';
 import { WorkCard } from '../../shared/work-card/work-card';
 import { FaqList } from '../../shared/faq-list/faq-list';
 import { ProcessSteps } from '../../shared/process-steps/process-steps';
-import { AboutMaker } from '../../shared/about-maker/about-maker';
 
 /*
   Egy komponens – három aloldal.
@@ -19,7 +18,7 @@ import { AboutMaker } from '../../shared/about-maker/about-maker';
 */
 @Component({
   selector: 'app-segment-page',
-  imports: [RouterLink, CurrencyPipe, NgOptimizedImage, WorkCard, FaqList, ProcessSteps, AboutMaker],
+  imports: [RouterLink, CurrencyPipe, NgOptimizedImage, WorkCard, FaqList, ProcessSteps],
   templateUrl: './segment-page.html',
   styleUrl: './segment-page.css',
 })
@@ -33,5 +32,4 @@ export class SegmentPage {
   protected readonly photo = computed(() => this.content.work(this.info().photoId));
   protected readonly works = computed(() => this.content.worksFor(this.segment()));
   protected readonly faqs = computed(() => this.content.faqsFor(this.segment()));
-  protected readonly isMedical = computed(() => this.segment() === 'hajpotlas');
 }

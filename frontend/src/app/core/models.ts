@@ -5,8 +5,8 @@
   egyeztetni, és a TypeScript mindenhol szól, ha valami nem stimmel.
 */
 
-/** A három vevőkör, amire az üzlet épül. */
-export type Segment = 'szinhaz' | 'mindennapi' | 'hajpotlas';
+/** A vevőkörök, amikre az üzlet épül. (A korábbi "hajpotlas" oldal megszűnt, átirányít a mindennapira.) */
+export type Segment = 'szinhaz' | 'mindennapi' | 'styling';
 
 export interface SegmentInfo {
   id: Segment;
@@ -24,6 +24,11 @@ export interface SegmentInfo {
   summary: string;
   /** Mit kap pontosan, aki ezt választja. */
   offers: string[];
+  /**
+    Az ajánlatkérő űrlapon előre kiválasztott típus. Nem mindig egyezik az id-val:
+    a stylinghoz nincs külön típus a backendben, ezért az "egyeb"-et választja.
+  */
+  inquiryType: InquiryType;
   /** Kiinduló ár Ft-ban; null = "egyedi árajánlat". */
   priceFrom: number | null;
 }
@@ -60,7 +65,12 @@ export interface Faq {
   segments: Segment[];
 }
 
-export type InquiryType = Segment | 'egyeb';
+/*
+  Az ajánlatkérés típusai – a backend INQUIRY_TYPES listájával egyezik, ezért külön soroljuk fel,
+  nem a Segment-ből számoljuk: egy új vevőkör (pl. styling) nem jelent új backend-típust.
+  A 'hajpotlas' a korábban beküldött kérések miatt marad (admin lista), az űrlapon nem választható.
+*/
+export type InquiryType = 'szinhaz' | 'mindennapi' | 'hajpotlas' | 'egyeb';
 
 /** Amit az ajánlatkérő űrlap elküld. */
 export interface Inquiry {

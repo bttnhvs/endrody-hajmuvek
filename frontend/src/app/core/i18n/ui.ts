@@ -16,7 +16,7 @@ const hu = {
   nav: {
     theatre: 'Színháznak',
     everyday: 'Mindennapra',
-    hairLoss: 'Hajvesztés esetén',
+    styling: 'Styling',
     work: 'Munkáim',
     menu: 'Menü',
     close: 'Bezárás',
@@ -28,8 +28,8 @@ const hu = {
   footer: { contact: 'Elérhetőség', follow: 'Kövess', fundingTranslation: '' },
   about: { tagsAria: 'Röviden rólam', write: 'Írj nekem' },
   home: {
-    h1: 'Kézzel csomózott parókák színpadra, filmre és hétköznapokra',
-    lead: 'A Szegedi Szabadtéri Játékok fodrász- és sminkrészlegének vezetőjeként, színházakban és filmforgatásokon készítek parókákat, szakállakat és bajuszokat. Ugyanezzel a pontossággal készítek neked is: mindennapi viseletre, vagy arra az időszakra, amikor elveszíted a hajad.',
+    h1: 'Parókák színpadra, filmre és a mindennapokra',
+    lead: 'Színházakban és a filmiparban szereztem több éves tapasztalatot, és ott szerettem bele igazán a szakmába. Egyedi megrendelésre készítek teljes parókát, pótrészt, szakállt, bajuszt és barkót, és vállalom a meglévő parókák átalakítását, méretre igazítását, karbantartását, vagy akár egy teljesen új frizurát is rájuk.',
     work: 'Munkáim',
     heroAlt: 'Platinaszőke, hullámos vintage paróka a fejformán',
     insetAlt: 'Sötétbarna, kunkorodó bajusz csipkealapon',
@@ -38,25 +38,24 @@ const hu = {
     whoFor: 'Kinek készítek?',
     details: 'Részletek',
     aboutAria: 'Rólam',
-    theatres: 'Színházak, ahol dolgoztam',
+    theatres: 'Színházak és társulatok, akikkel dolgoztam',
     proofAlt: 'Két rokokó paróka: egy púderszőke és egy ősz, sűrű fürtökkel',
     proofQuote:
-      'A szabadtéri színpadon egy parókának nyári hőségben, reflektorfényben is ki kell tartania, a kamera pedig közelről mindent lát. Ezt a mércét hozom el a hétköznapi parókákba is.',
+      'A színpadon egy parókának egy teljes évadon át, reflektorfényben is ki kell tartania, a kamera pedig közelről mindent lát. Ezt a mércét hozom el a hétköznapi parókákba is.',
     facts: [
-      { strong: 'Kézi csomózás', rest: ' szálanként, természetes választékkal' },
+      { strong: 'A megfelelő technika', rest: ': csomózás, punching vagy tressz, a kívánt hatáshoz igazítva' },
       { strong: 'A te fejformádra', rest: ' készül, nem polcról levett méret' },
       { strong: 'Utógondozás', rest: ': mosás, javítás, frissítés évekig' },
     ],
     process: 'Így készül a parókád',
     workshop: 'A műhelyből',
-    workshopLead: 'Egy paróka több tízezer egyenként befűzött hajszálból áll. Így néz ki közben.',
     someWork: 'Néhány munkám',
     allWork: 'Az összes munka',
     shopGo: 'Irány az Etsy-bolt',
     shopAsk: 'Érdeklődöm',
     faq: 'Gyakori kérdések',
     closingTitle: 'Beszéljük meg, milyen parókára van szükséged',
-    closingLead: 'Az első beszélgetés ingyenes, és semmire nem kötelez.',
+    closingLead: 'Az első konzultáció online történik, ingyenes, és semmire nem kötelez. Személyes konzultációra és próbára a műhelyemben, díj ellenében van lehetőség.',
   },
   segment: {
     offer: 'Mit kapsz?',
@@ -66,13 +65,7 @@ const hu = {
     customQuote: 'Egyedi árajánlat',
     priceNote:
       'Az ár a haj típusától, hosszától és a munka mennyiségétől függ. A konzultáció után pontos ajánlatot adok.',
-    ctaMedical: 'Diszkrét konzultációt kérek',
     ctaQuote: 'Ajánlatot kérek',
-    careTitle: 'Amire ebben az időszakban figyelek',
-    careOne:
-      'Tudom, hogy a hajvesztés nem csak esztétikai kérdés. A konzultáció négyszemközt zajlik, a saját tempódban. Ha még a kezelés előtt jössz, lefotózzuk és felmérjük a frizurádat, hogy a paróka a lehető legjobban hasonlítson a saját hajadra.',
-    careTwo:
-      'Kemoterápia esetén az onkológus orvosi vényen parókát írhat fel. A NEAK-támogatás csak a hivatalos listán szereplő modellekre jár – kérdezz rá nyugodtan, segítek eligazodni.',
     howMade: 'Így készül',
     related: 'Kapcsolódó munkáim',
     questions: 'Kérdések',
@@ -96,7 +89,7 @@ const hu = {
       szinhaz: 'Színházi / filmes munka',
       mindennapi: 'Mindennapi paróka',
       hajpotlas: 'Paróka hajvesztés miatt',
-      egyeb: 'Javítás, bérlés vagy más',
+      egyeb: 'Átalakítás, styling vagy más',
     } as Record<InquiryType, string>,
     name: 'Neved',
     nameError: 'Add meg a neved.',
@@ -120,7 +113,7 @@ const hu = {
     lead: 'Tanulj parókakészítést és formázást színházi szakembertől, kis csoportban vagy négyszemközt, a szegedi műhelyemben.',
     topics: [
       { title: 'Parókakészítés', text: 'csomózás, alapkészítés' },
-      { title: 'Formázás', text: 'cosplay, korhű frizurák, rokokó' },
+      { title: 'Formázás', text: 'korhű frizurák, rokokó, fantasy' },
     ],
     cards: [
       { title: 'Csoportos workshopok', text: 'Kis létszámú alkalmak, akár egy hangulatos, régi bútoros nappaliban.' },
@@ -161,7 +154,7 @@ const en: UiText = {
   nav: {
     theatre: 'For theatre',
     everyday: 'For every day',
-    hairLoss: 'For hair loss',
+    styling: 'Restyling',
     work: 'My work',
     menu: 'Menu',
     close: 'Close',
@@ -178,8 +171,8 @@ const en: UiText = {
   },
   about: { tagsAria: 'About me in brief', write: 'Write to me' },
   home: {
-    h1: 'Hand-knotted wigs for stage, screen and everyday life',
-    lead: 'As head of the hair and make-up department at the Szeged Open-Air Festival, I make wigs, beards and moustaches for theatre and film. I bring the same precision to wigs for you: for everyday wear, or for the time when you lose your hair.',
+    h1: 'Wigs for stage, screen and everyday life',
+    lead: 'Years of work in theatre and film taught me this craft and made me fall in love with it. I make full wigs, hairpieces, beards, moustaches and sideburns to order, and I alter, resize, maintain and restyle the wigs you already own.',
     work: 'My work',
     heroAlt: 'Platinum blonde, wavy vintage wig on a block',
     insetAlt: 'Dark brown curled moustache on a lace base',
@@ -188,26 +181,24 @@ const en: UiText = {
     whoFor: 'Who I make wigs for',
     details: 'Learn more',
     aboutAria: 'About me',
-    theatres: 'Theatres I have worked in',
+    theatres: 'Theatres and companies I have worked with',
     proofAlt: 'Two rococo wigs: one powder blonde and one grey, with dense curls',
     proofQuote:
-      'On an open-air stage, a wig has to last through summer heat and spotlights, and the camera sees everything up close. I bring that standard to everyday wigs too.',
+      'On stage, a wig has to last a whole season under the spotlights, and the camera sees everything up close. I bring that standard to everyday wigs too.',
     facts: [
-      { strong: 'Hand-knotted', rest: ' strand by strand, with a natural parting' },
+      { strong: 'The right technique', rest: ': knotting, punching or wefts, chosen for the look you want' },
       { strong: 'Made for your head', rest: ', not an off-the-shelf size' },
       { strong: 'Aftercare', rest: ': washing, repairs and refreshes for years' },
     ],
     process: 'How your wig is made',
     workshop: 'From the workshop',
-    workshopLead:
-      'A wig is made of tens of thousands of individually knotted hairs. This is what it looks like along the way.',
     someWork: 'Some of my work',
     allWork: 'See all work',
     shopGo: 'Visit the Etsy shop',
     shopAsk: 'Enquire',
     faq: 'Frequently asked questions',
     closingTitle: "Let's talk about the wig you need",
-    closingLead: 'The first conversation is free, with no obligation.',
+    closingLead: 'The first consultation is online, free and with no obligation. In-person consultations and fittings at my workshop are charged.',
   },
   segment: {
     offer: 'What you get',
@@ -217,13 +208,7 @@ const en: UiText = {
     customQuote: 'Custom quote',
     priceNote:
       'The price depends on hair type, length and the amount of work. I will give you an exact quote after the consultation.',
-    ctaMedical: 'Book a discreet consultation',
     ctaQuote: 'Request a quote',
-    careTitle: 'What I keep in mind at this time',
-    careOne:
-      'I know that losing your hair is about much more than appearance. The consultation is one-to-one and at your own pace. If you come before treatment, we photograph and record your hairstyle so the wig can look as much like your own hair as possible.',
-    careTwo:
-      'In Hungary, an oncologist can prescribe a wig during chemotherapy. The national health insurance (NEAK) subsidy only applies to models on the official list. Feel free to ask, and I will help you find your way.',
     howMade: 'How it is made',
     related: 'Related work',
     questions: 'Questions',
@@ -247,7 +232,7 @@ const en: UiText = {
       szinhaz: 'Theatre / film work',
       mindennapi: 'Everyday wig',
       hajpotlas: 'Wig for hair loss',
-      egyeb: 'Repair, hire or other',
+      egyeb: 'Alterations, restyling or other',
     },
     name: 'Your name',
     nameError: 'Please enter your name.',
@@ -271,7 +256,7 @@ const en: UiText = {
     lead: 'Learn wig making and styling from a theatre professional, in small groups or one-to-one in my Szeged studio.',
     topics: [
       { title: 'Wig making', text: 'knotting, building the base' },
-      { title: 'Styling', text: 'cosplay, period hairstyles, rococo' },
+      { title: 'Styling', text: 'period hairstyles, rococo, fantasy' },
     ],
     cards: [
       { title: 'Group workshops', text: 'Small-group sessions, perhaps in a cosy living room full of antique furniture.' },

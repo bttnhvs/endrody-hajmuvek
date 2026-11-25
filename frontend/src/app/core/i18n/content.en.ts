@@ -14,13 +14,12 @@ const SEGMENT_TEXT: Record<Segment, SegmentText> = {
     heroTitle: 'Wigs that convince under stage lights and on camera',
     audience: 'For costume designers, theatres, film productions and amateur companies.',
     summary:
-      'As head of the hair and make-up department at the Szeged Open-Air Festival, I know what a wig has to survive in a summer season and what the camera sees up close. Period and character wigs made to design, with quick repairs and refreshes for your existing stock.',
+      'Period and character wigs made to the costume design, facial hair, and repairs, alterations and restyling for your existing stock. I know what a wig has to survive over a season and what the camera sees up close.',
     offers: [
       'New wigs based on the costume design or period sources',
-      'Beards, moustaches and sideburns on a hand-knotted base',
-      'Quick replacements when the cast changes',
+      'Beards, moustaches and sideburns made to order',
+      'Alterations and resizing of existing wigs',
       'Repair, washing and restyling of your existing wig stock',
-      'Character wig hire for school and amateur productions',
       'Film work: wigs and hairstyles made for the closeness of the camera',
     ],
   },
@@ -29,25 +28,25 @@ const SEGMENT_TEXT: Record<Segment, SegmentText> = {
     heroTitle: 'A wig nobody can tell is a wig',
     audience: 'For anyone with thinning hair, looking for a new style, or simply wanting to feel good.',
     summary:
-      'Natural-looking wigs tailored to your face shape, hair colour and lifestyle, using the same technique that holds up in a film close-up.',
+      'Natural-looking wigs tailored to your face shape, hair colour and lifestyle. I can also alter, resize or restyle a wig you already have.',
     offers: [
-      'Hand-knotted parting and hairline that move naturally',
+      'A parting and hairline that move naturally',
       'Human hair or high-quality synthetic hair, matched to how you wear it',
       'Cut and styled on you into the final look',
       'Washing, refreshing and repairs, even if you bought the wig elsewhere',
     ],
   },
-  hajpotlas: {
-    title: 'For hair loss',
-    heroTitle: 'Calm, discreet help when you lose your hair',
-    audience: 'For people losing their hair through chemotherapy, alopecia or other health reasons.',
+  styling: {
+    title: 'Restyling and special occasions',
+    heroTitle: 'A new look for the wig you already own',
+    audience: 'For anyone who already has a wig and wants a new style, or is getting ready for a special occasion.',
     summary:
-      'A discreet, unhurried consultation, skin-friendly materials and aftercare, during and after treatment. As a theatre and film wigmaker, I aim for the most natural result possible.',
+      'I restyle existing wigs, whether you want a completely new hairstyle or something for a special occasion. It does not matter if you bought the wig elsewhere.',
     offers: [
-      'One-to-one consultation, at home or in hospital if you prefer',
-      'We record your hairstyle before hair loss, so you can have it back',
-      'A soft, breathable base for sensitive scalps',
-      'Adjustments during treatment, and help when your hair grows back',
+      'A completely new hairstyle for your existing wig',
+      'Special-occasion styles for wigs and hairpieces',
+      'Period hairstyles from the Rococo to the Victorian era',
+      'Washing and restyling to make the wig look fresh again',
     ],
   },
 };
@@ -91,13 +90,11 @@ const GALLERY_TEXT: Record<string, Pick<GalleryItem, 'title' | 'caption' | 'alt'
 
 /* A sorrend megegyezik a magyar FAQS tömbével. */
 const FAQ_TEXT: Pick<Faq, 'question' | 'answer'>[] = [
-  { question: 'How long does a wig take to make?', answer: 'A fully hand-knotted wig takes 2–6 weeks, depending on length and density. For urgent theatre work, let me know as early as possible so I can schedule it.' },
+  { question: 'How long does a wig take to make?', answer: 'A new wig takes 2–6 weeks, depending on the technique, length and density. For urgent theatre work, let me know as early as possible so I can schedule it.' },
   { question: 'What hair are the wigs made from?', answer: 'Human hair or high-quality synthetic hair. The choice depends on budget, how often you wear it and the look you want. I will show you both at the consultation.' },
-  { question: 'Is there health insurance support for a wig?', answer: 'In Hungary, an oncologist can prescribe a wig during chemotherapy, but the national health insurance (NEAK) subsidy only applies to models on the official list. Custom work is typically not on that list, so ask me what support I can offer.' },
-  { question: 'Can you come to me?', answer: 'Yes, by appointment I can come to your home or to the hospital for consultations and fittings.' },
-  { question: 'Do you repair or alter existing wigs?', answer: 'Yes: washing, restyling, repairing the knotting and colour correction. I also refresh wig stock for theatres.' },
-  { question: 'Who have you worked for?', answer: 'I lead the hair and make-up department at the Szeged Open-Air Festival and work regularly for theatres, including productions of Dance of the Vampires and Pinceszínház, as well as on film sets. My film credits are on IMDb.' },
-  { question: 'Can I hire a wig?', answer: 'You can hire from my existing character wigs for school productions, carnival or filming. Tell me what you need it for and when.' },
+  { question: 'How does the consultation work?', answer: 'The first consultation is online and free of charge. In-person consultations and fittings take place at my workshop in Szeged, by appointment, and are charged.' },
+  { question: 'Do you repair or alter existing wigs?', answer: 'Yes: alterations, resizing, washing, restyling or even a completely new hairstyle, repairs to the knotting and colour correction. I also refresh wig stock for theatres.' },
+  { question: 'Who have you worked for?', answer: 'I work regularly with theatres and companies, including Vígszínház, Örkény Theatre, Ferencváros Pinceszínház, Csiky Gergely Theatre in Kaposvár and the German State Theatre Timișoara, as well as on film sets. My film credits are on IMDb.' },
 ];
 
 export const SEGMENTS_EN: SegmentInfo[] = SEGMENTS.map((s) => ({ ...s, ...SEGMENT_TEXT[s.id] }));

@@ -11,7 +11,7 @@ export const EN_ROUTES: Routes = [
     title: '',
     data: {
       description:
-        'Hand-knotted wigs by the head of the hair and make-up department at the Szeged Open-Air Festival: for theatre, film, everyday wear and hair loss. Szeged and Budapest, Hungary.',
+        'Wigs, hairpieces, beards and moustaches for theatre, film and everyday life, plus alterations and restyling of existing wigs. Szeged and Budapest, Hungary.',
     },
     loadComponent: () => import('../../pages/home/home').then((m) => m.Home),
   },
@@ -21,7 +21,7 @@ export const EN_ROUTES: Routes = [
     data: {
       segment: 'szinhaz',
       description:
-        'Period and character wigs for theatre and film, wig stock repair and hire, by the head of the hair and make-up department at the Szeged Open-Air Festival.',
+        'Period and character wigs, beards and moustaches for theatre and film productions, plus repairs and alterations for your existing wig stock.',
     },
     loadComponent: segmentPage,
   },
@@ -30,19 +30,21 @@ export const EN_ROUTES: Routes = [
     title: 'Wigs for every day',
     data: {
       segment: 'mindennapi',
-      description: 'Natural-looking, hand-knotted wigs tailored to your face shape.',
+      description: 'Natural-looking wigs tailored to your face shape, plus alterations, resizing and restyling of wigs you already own.',
     },
     loadComponent: segmentPage,
   },
   {
-    path: EN_SLUGS['hajpotlas'],
-    title: 'Wigs for hair loss',
+    path: EN_SLUGS['styling'],
+    title: 'Restyling and special occasions',
     data: {
-      segment: 'hajpotlas',
-      description: 'Discreet consultation and skin-friendly wigs for chemotherapy or alopecia.',
+      segment: 'styling',
+      description: 'A new hairstyle for the wig you already own, plus special-occasion and period styling for wigs and hairpieces.',
     },
     loadComponent: segmentPage,
   },
+  // A megszűnt hajpótlás-oldal régi címe (/en/hair-loss) a mindennapira visz (lásd app.routes.ts).
+  { path: EN_SLUGS['hajpotlas'], redirectTo: EN_SLUGS['mindennapi'] },
   {
     path: EN_SLUGS['munkaim'],
     title: 'My work',

@@ -31,22 +31,11 @@
       <p class="price__value">{{ t.customQuote }}</p>
     }
     <p>{{ t.priceNote }}</p>
-    <a class="btn" [routerLink]="i18n.path('/ajanlatkeres')" [queryParams]="{ tipus: s.id }">
-      {{ isMedical() ? t.ctaMedical : t.ctaQuote }}
+    <a class="btn" [routerLink]="i18n.path('/ajanlatkeres')" [queryParams]="{ tipus: s.inquiryType }">
+      {{ t.ctaQuote }}
     </a>
   </aside>
 </section>
-
-@if (isMedical()) {
-  <section class="wrap section care">
-    <h2>{{ t.careTitle }}</h2>
-    <p>{{ t.careOne }}</p>
-    <p>{{ t.careTwo }}</p>
-    <div class="care__maker">
-      <app-about-maker compact />
-    </div>
-  </section>
-}
 
 <section class="wrap section">
   <h2>{{ t.howMade }}</h2>

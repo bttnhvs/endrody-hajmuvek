@@ -77,6 +77,13 @@ Részletes magyarázat: `frontend/TANULAS.md`, `backend/TANULAS-BACKEND.md`.
   (nincs DNS/MX), bekötése után a Render `CORS_ORIGIN`-be is fel kell venni.
 - 2026-11-22: **workshop-blokk** a főoldal alján (`shared/workshop-teaser`), feliratkozás Formspree-vel.
   A `SITE.workshopFormspreeId` még üres: élesben addig az űrlap helyett egy ajánlatkérő link látszik.
+- 2026-11-25: **Judit visszajelzése átvezetve** (`JUDIT-VISSZAJELZES.md`): nem a kézi csomózás a fő üzenet,
+  a Szabadtéri csak a referenciákban és a bemutatkozás első mondatában, a hajpótlás-oldal megszűnt
+  (`/hajpotlas` → `/mindennapi`, `/en/hair-loss` → `/en/everyday` átirányítás), nincs bérlés, házhoz menés,
+  NEAK, csak az online első konzultáció ingyenes, Etsy: Történelmi + Fantasy, új színház- és társulatlista.
+  A `hajpotlas` ajánlatkérés-típus a régi rekordok miatt megmaradt, az űrlapon nem választható.
+  3. vevőkör: **Styling és alkalmi frizurák** (`/styling`, `/en/styling`); az ajánlatkérésen „egyeb” típust választ,
+  mert a backendben nincs külön styling-típus. A Szegedi Nemzeti Színház marad. Nyitott: Operaház, konzultációs díj.
 
 ## Lehetséges következő lépések
 1. Kitelepítés a `KITELEPITES.md` alapján (fiókok, GitHub-repó – ehhez a felhasználó kell)

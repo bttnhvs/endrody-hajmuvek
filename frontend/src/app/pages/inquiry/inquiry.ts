@@ -2,7 +2,7 @@ import { Component, OnInit, computed, inject, input, signal } from '@angular/cor
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
-import { INQUIRY_TYPES } from '../../core/inquiry-labels';
+import { FORM_INQUIRY_TYPES } from '../../core/inquiry-labels';
 import { InquiryService } from '../../core/inquiry.service';
 import { InquiryType } from '../../core/models';
 import { SITE } from '../../core/site.config';
@@ -35,7 +35,7 @@ export class InquiryPage implements OnInit {
 
   /** A típusok azonosítója közös, a felirat az aktuális nyelvet követi. */
   protected readonly types = computed(() =>
-    INQUIRY_TYPES.map((t) => ({ id: t.id, label: this.i18n.ui().inquiry.types[t.id] })),
+    FORM_INQUIRY_TYPES.map((t) => ({ id: t.id, label: this.i18n.ui().inquiry.types[t.id] })),
   );
   protected readonly site = SITE;
   protected readonly tel = SITE.phone.replace(/\s/g, '');
@@ -59,7 +59,8 @@ export class InquiryPage implements OnInit {
 
   ngOnInit(): void {
     const fromUrl = this.tipus();
-    if (INQUIRY_TYPES.some((t) => t.id === fromUrl)) {
+    // Egy régi ?tipus=hajpotlas link esetén marad az alapértelmezett típus.
+    if (FORM_INQUIRY_TYPES.some((t) => t.id === fromUrl)) {
       this.form.controls.type.setValue(fromUrl as InquiryType);
     }
   }

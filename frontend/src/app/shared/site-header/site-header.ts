@@ -22,7 +22,7 @@ export class SiteHeader {
     return [
       { path: this.i18n.path('/szinhaz'), label: nav.theatre },
       { path: this.i18n.path('/mindennapi'), label: nav.everyday },
-      { path: this.i18n.path('/hajpotlas'), label: nav.hairLoss },
+      { path: this.i18n.path('/styling'), label: nav.styling },
       { path: this.i18n.path('/munkaim'), label: nav.work },
     ];
   });

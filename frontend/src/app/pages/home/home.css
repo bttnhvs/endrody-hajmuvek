@@ -394,23 +394,18 @@ a.credit__where:hover {
   margin: 2rem 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* Annyi oszlop, amennyi elfér (min. 15rem), így 8–10 elemnél is rendezett marad. */
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  column-gap: 2rem;
   border-top: 1.5px solid var(--sage);
 }
 
 .theatre {
   display: grid;
   align-content: start;
-  gap: 0.35rem;
-  padding: 1.5rem 1.25rem;
-}
-
-.theatre:first-child {
-  padding-left: 0;
-}
-
-.theatre + .theatre {
-  border-left: 1px solid var(--line);
+  gap: 0.2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .theatre__name {
@@ -421,20 +416,4 @@ a.credit__where:hover {
 
 .theatre__link {
   font-size: var(--step--1);
-}
-
-@media (max-width: 900px) {
-  .theatres {
-    grid-template-columns: 1fr;
-  }
-
-  .theatre,
-  .theatre:first-child {
-    padding: 1rem 0;
-  }
-
-  .theatre + .theatre {
-    border-left: 0;
-    border-top: 1px solid var(--line);
-  }
 }

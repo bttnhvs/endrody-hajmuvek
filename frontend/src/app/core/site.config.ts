@@ -41,11 +41,11 @@ export const SITE = {
     makerName: '', // TODO: pl. 'Endrődy Kata' – üresen hagyva nem jelenik meg
     heading: 'Aki a parókádat készíti',
     paragraphs: [
-      'Fodrász és parókakészítő vagyok. A Szegedi Szabadtéri Játékokon a fodrász- és sminkrészleget vezetem, rendszeresen dolgozom színházaknak – többek között a Vámpírok bálja előadásain –, és filmforgatásokon is. A színpadon és a kamera előtt tanultam meg, mennyit számít egy szálanként csomózott hajvonal.',
-      'A saját szegedi műhelyemben ugyanezzel a gondossággal készítem a mindennapi és a hajvesztés miatti parókákat is, és gyakran dolgozom Budapesten is. Az első beszélgetéstől az utolsó igazításig velem beszélsz.',
+      'Fodrász és parókakészítő vagyok. A Szegedi Szabadtéri Játékokon a fodrász- és sminkrészleget vezetem, és rendszeresen dolgozom színházaknak és filmforgatásokon is.',
+      'A szegedi műhelyemben új parókákat és szőrzeteket készítek, és meglévő darabokat alakítok át, igazítok méretre és formázok újra. Gyakran dolgozom Budapesten is. Az első beszélgetéstől az utolsó igazításig velem beszélsz.',
     ],
     /** Rövid címkék a szöveg alatt. TODO: igazítsátok a valósághoz. */
-    tags: ['Fodrász', 'Key hairstylist', 'Hair designer', 'Színházi és filmes parókakészítő', 'Rokokó specialista', 'Kézi csomózás', 'Szeged', 'Budapest'],
+    tags: ['Fodrász', 'Key hairstylist', 'Hair designer', 'Színházi és filmes parókakészítő', 'Rokokó specialista', 'Parókaátalakítás', 'Szeged', 'Budapest'],
     image: 'images/rolam-illusztracio.svg',
     imageAlt:
       'Illusztráció: rövid, vagány, szőke hajú parókakészítő a műhelyében, mellette egy barna, göndör paróka a fejformán',
@@ -54,28 +54,31 @@ export const SITE = {
   },
 
   /*
-    A főoldal "Színházak, ahol dolgoztam" szekciója.
-    Ha egy színháznál van `url`, megjelenik mellette a `linkLabel` szövegű link.
+    A főoldal "Színházak és társulatok, akikkel dolgoztam" szekciója.
+    Ha egy elemnél van `url`, megjelenik alatta a `linkLabel` szövegű link.
+    A sorrend az angol listában (site.en.ts) is ugyanez legyen.
+    A Szegedi Nemzeti Színház marad. TODO: az Operaházról Judit még nem nyilatkozott.
   */
   theatres: [
+    { name: 'Temesvári Német Állami Színház', url: '', linkLabel: '' },
+    { name: 'Budapesti Fesztiválzenekar', url: '', linkLabel: '' },
+    { name: 'Szegedi Kortárs Balett', url: '', linkLabel: '' },
+    { name: 'Szatmárnémeti Északi Színház', url: '', linkLabel: '' },
+    { name: 'Csiky Gergely Színház, Kaposvár', url: '', linkLabel: '' },
+    { name: 'Vígszínház', url: '', linkLabel: '' },
+    { name: 'Örkény István Színház', url: '', linkLabel: '' },
+    { name: 'Ferencvárosi Pinceszínház', url: 'https://pinceszinhaz.hu/a-tarsulat/', linkLabel: 'A társulat oldalán' },
     { name: 'Szegedi Nemzeti Színház', url: '', linkLabel: '' },
-    {
-      name: 'Pinceszínház',
-      url: 'https://pinceszinhaz.hu/a-tarsulat/',
-      linkLabel: 'A társulat oldalán',
-    },
     { name: 'Magyar Állami Operaház', url: '', linkLabel: '' },
-    { name: 'Művészetek Palotája (Müpa)', url: '', linkLabel: '' },
   ],
 
   /* A főoldal Etsy-bolt szekciójának szövegei. */
   shop: {
     heading: 'Parókák és kiegészítők az Etsy-n',
-    text: 'Cosplayhez vagy jelmezhez keresel valami különlegeset? Az Etsy-boltomban cosplay, rokokó és Vámpírok bálja stílusú parókákat és kiegészítőket találsz.',
+    text: 'Történelmi vagy fantasy jelmezhez keresel valami különlegeset? Az Etsy-boltomban mindkét stílusban találsz kézzel készített parókákat és kiegészítőket.',
     categories: [
-      { title: 'Cosplay', text: 'Parókák és kiegészítők a kedvenc karaktereidhez.' },
-      { title: 'Rokokó', text: 'Fürtös, díszes darabok a 18. század stílusában.' },
-      { title: 'Vámpírok bálja stílus', text: 'A musical világát idéző parókák és kiegészítők.' },
+      { title: 'Történelmi', text: 'Korhű frizurák a rokokótól a viktoriánus korig.' },
+      { title: 'Fantasy', text: 'Parókák és kiegészítők fantasy és mesebeli jelmezekhez.' },
     ],
   },
 
@@ -91,7 +94,7 @@ export const SITE = {
       url: '',
     },
     {
-      where: 'Vámpírok bálja',
+      where: 'Budapesti színházi produkciók',
       role: 'Key hairstylist, hair designer',
       url: '',
     },

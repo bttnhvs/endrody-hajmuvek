@@ -6,12 +6,16 @@ import { InquiryStatus, InquiryType } from './models';
   (A backend inquiry.types.ts-ében ugyanezek az azonosítók szerepelnek.)
 */
 
-export const INQUIRY_TYPES: { id: InquiryType; label: string }[] = [
-  { id: 'szinhaz', label: 'Színházi / filmes munka' },
-  { id: 'mindennapi', label: 'Mindennapi paróka' },
-  { id: 'hajpotlas', label: 'Paróka hajvesztés miatt' },
-  { id: 'egyeb', label: 'Javítás, bérlés vagy más' },
+export const INQUIRY_TYPES: { id: InquiryType; label: string; inForm: boolean }[] = [
+  { id: 'szinhaz', label: 'Színházi / filmes munka', inForm: true },
+  { id: 'mindennapi', label: 'Mindennapi paróka', inForm: true },
+  // Csak a régi ajánlatkérések miatt van itt (admin lista), az űrlapon nem jelenik meg.
+  { id: 'hajpotlas', label: 'Paróka hajvesztés miatt (régi)', inForm: false },
+  { id: 'egyeb', label: 'Átalakítás, styling vagy más', inForm: true },
 ];
+
+/** Az űrlapon választható típusok. */
+export const FORM_INQUIRY_TYPES = INQUIRY_TYPES.filter((t) => t.inForm);
 
 export const INQUIRY_STATUSES: { id: InquiryStatus; label: string }[] = [
   { id: 'uj', label: 'Új' },

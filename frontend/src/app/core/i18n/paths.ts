@@ -8,7 +8,8 @@ export type Lang = 'hu' | 'en';
 export const EN_SLUGS: Record<string, string> = {
   szinhaz: 'theatre',
   mindennapi: 'everyday',
-  hajpotlas: 'hair-loss',
+  styling: 'styling',
+  hajpotlas: 'hair-loss', // megszűnt oldal, csak az átirányítás miatt van itt
   munkaim: 'work',
   ajanlatkeres: 'contact',
 };
