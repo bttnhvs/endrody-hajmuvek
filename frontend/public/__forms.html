@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Űrlapok</title>
+</head>
+<body>
+  <!--
+    Rejtett, statikus másolat a weboldal űrlapjairól – NEM látogatóknak szól.
+
+    A Netlify kitelepítéskor a statikus HTML-fájlokban keresi a data-netlify="true" űrlapokat.
+    Az Angular az űrlapokat JavaScriptből rajzolja ki, ezért a Netlify azokat nem látná:
+    ez a fájl mondja meg neki, milyen nevű űrlapok vannak és milyen mezőkkel.
+
+    Ha az Angular-űrlapon új mezőt veszel fel, ide is írd be ugyanazzal a névvel,
+    különben a Netlify eldobja azt a mezőt. A beküldés ide érkezik (lásd netlify-forms.service.ts).
+  -->
+
+  <form name="ajanlatkeres" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name="bot-field">
+    <input type="text" name="type">
+    <input type="text" name="name">
+    <input type="email" name="email">
+    <input type="tel" name="phone">
+    <textarea name="message"></textarea>
+    <input type="text" name="consent">
+    <input type="text" name="language">
+  </form>
+
+  <form name="workshop" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="text" name="bot-field">
+    <input type="email" name="email">
+    <input type="text" name="consent">
+    <input type="text" name="language">
+  </form>
+</body>
+</html>

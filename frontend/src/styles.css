@@ -23,9 +23,13 @@
   --line: rgb(47 61 46 / 0.14);
   --surface: #ffffff;
 
-  /* Betűk */
-  --font-display: 'Bodoni Moda', 'Didot', Georgia, serif;
-  --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /*
+    Betűk – saját szerverről (a Fontsource npm-csomagokból, lásd angular.json "styles"),
+    nem a Google Fonts-ból: így a látogatók IP-címe nem jut el a Google-höz.
+    A csomagok a betűtípust "... Variable" néven regisztrálják (változtatható vastagságú betű).
+  */
+  --font-display: 'Bodoni Moda Variable', 'Didot', Georgia, serif;
+  --font-body: 'Hanken Grotesk Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* Típusskála (kb. 1.25-ös arány) */
   --step--1: 0.875rem;

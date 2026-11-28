@@ -1,21 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, inject, isDevMode, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LanguageService } from '../../core/i18n/language.service';
-import { SITE } from '../../core/site.config';
+import { NetlifyFormsService } from '../../core/netlify-forms.service';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 /*
   "Workshopok és magánórák – hamarosan" blokk feliratkozással.
-
-  A feliratkozás a Formspree-hez megy, nem a saját backendünkhöz: egy egyszerű
-  érdeklődőlistához nem kell új adatbázistábla és végpont.
-
-  Amíg nincs beállítva a `SITE.workshopFormspreeId`:
-  - fejlesztés közben (ng serve) az űrlap látszik, és csak szimulálja a küldést,
-  - élesben az űrlap helyett egy link visz az ajánlatkérésre, így nem vész el feliratkozó.
+  A feliratkozás a Netlify Formsba megy (űrlapnév: "workshop"), ugyanúgy, mint az ajánlatkérés;
+  a feliratkozókat Judit a Netlify felületén, a Forms menüben látja.
 */
 @Component({
   selector: 'app-workshop-teaser',
@@ -35,7 +29,7 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
 
         @if (status() === 'sent') {
           <p class="done" role="status">{{ t.success }}</p>
-        } @else if (canSubscribe) {
+        } @else {
           <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
             <label for="workshop-email">{{ t.emailLabel }}</label>
             <div class="signup">
@@ -54,16 +48,19 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
               <p class="error">{{ t.emailError }}</p>
             }
 
-            <!-- Spamcsapda: a Formspree eldobja a kérést, ha ez ki van töltve. -->
+            <!-- Spamcsapda (honeypot): a Netlify eldobja a beküldést, ha ez ki van töltve. -->
             <div class="trap" aria-hidden="true">
-              <label for="workshop-gotcha">Website</label>
-              <input id="workshop-gotcha" type="text" formControlName="_gotcha" tabindex="-1" autocomplete="off" />
+              <label for="workshop-bot-field">Ezt a mezőt hagyd üresen</label>
+              <input id="workshop-bot-field" type="text" formControlName="botField" tabindex="-1" autocomplete="off" />
             </div>
 
             <label class="consent">
               <input type="checkbox" formControlName="consent" />
               <span>{{ t.consent }}</span>
             </label>
+            <p class="privacy-link">
+              <a [routerLink]="i18n.path('/adatkezeles')" target="_blank">{{ i18n.ui().common.privacy }}</a>
+            </p>
             @if (showError('consent')) {
               <p class="error">{{ t.consentError }}</p>
             }
@@ -71,10 +68,6 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
               <p class="error" role="alert">{{ t.error }}</p>
             }
           </form>
-        } @else {
-          <a class="btn btn--ghost" [routerLink]="i18n.path('/ajanlatkeres')" [queryParams]="{ tipus: 'egyeb' }">
-            {{ t.fallback }}
-          </a>
         }
       </div>
 
@@ -153,6 +146,11 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
       margin-top: 0.2em;
       accent-color: var(--rose);
     }
+    .privacy-link {
+      margin: 0.3rem 0 0;
+      padding-left: 1.5rem;
+      font-size: var(--step--1);
+    }
     .error {
       margin: 0.4rem 0 0;
       color: var(--rose-deep);
@@ -195,13 +193,9 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
   `,
 })
 export class WorkshopTeaser {
-  private readonly http = inject(HttpClient);
   private readonly fb = inject(NonNullableFormBuilder);
+  private readonly forms = inject(NetlifyFormsService);
   protected readonly i18n = inject(LanguageService);
-
-  // A `string` típus kell, mert a SITE `as const`, és az üres érték típusa különben ''.
-  private readonly formId: string = SITE.workshopFormspreeId;
-  protected readonly canSubscribe = !!this.formId || isDevMode();
 
   protected readonly status = signal<Status>('idle');
   private readonly submitted = signal(false);
@@ -209,7 +203,8 @@ export class WorkshopTeaser {
   protected readonly form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     consent: [false, Validators.requiredTrue],
-    _gotcha: [''],
+    // Honeypot: a látogató nem látja, a spamrobotok kitöltik.
+    botField: [''],
   });
 
   protected showError(name: 'email' | 'consent'): boolean {
@@ -224,26 +219,15 @@ export class WorkshopTeaser {
       return;
     }
 
-    if (!this.formId) {
-      this.status.set('sent');
-      return;
-    }
-
     this.status.set('sending');
-    const { email, consent, _gotcha } = this.form.getRawValue();
-    this.http
-      .post(
-        `https://formspree.io/f/${this.formId}`,
-        {
-          email,
-          consent,
-          _gotcha,
-          language: this.i18n.lang(),
-          _subject: 'Új feliratkozó: workshopok és magánórák',
-        },
-        // Enélkül a Formspree JSON helyett egy átirányító oldalt adna vissza.
-        { headers: new HttpHeaders({ Accept: 'application/json' }) },
-      )
+    const { email, consent, botField } = this.form.getRawValue();
+    this.forms
+      .submit('workshop', {
+        'bot-field': botField,
+        email,
+        consent: consent ? 'igen' : 'nem',
+        language: this.i18n.lang(),
+      })
       .subscribe({
         next: () => this.status.set('sent'),
         error: () => this.status.set('error'),

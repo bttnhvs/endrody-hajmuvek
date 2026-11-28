@@ -1,50 +1,36 @@
 # Endrődy Hajművek – weboldal
 
-Full-stack weboldal egy budapesti parókakészítő műhelynek, amely színházi parókák mellett
-mindennapi viseletre és hajvesztés esetére is készít egyedi, kézzel csomózott parókákat.
+Weboldal egy szegedi parókakészítő műhelynek: parókák, pótrészek és szőrzetek színházaknak,
+filmeknek és a mindennapokra, valamint meglévő parókák átalakítása. Magyarul és angolul.
 
 ```
-frontend/   Angular 20 – a weboldal, ami a látogató böngészőjében fut
-backend/    NestJS 11 – API: ajánlatkérések fogadása, mentése, e-mail értesítés
+frontend/      Angular 20 – a weboldal
+netlify.toml   Netlify build- és átirányítási beállítások
 ```
 
-## Indítás (két terminálban)
+## Indítás
 
 ```bash
-# 1. backend  →  http://localhost:3001/api/health
-cd backend
-npm install
-copy .env.example .env        # macOS/Linux: cp .env.example .env
-npm run start:dev
-
-# 2. frontend  →  http://localhost:4201
 cd frontend
 npm install
-npm start
+npm start          # http://localhost:4201
 ```
 
-Node.js 20.19+ szükséges. A frontend fejlesztés közben az `/api` kéréseket a
-`proxy.conf.json` alapján a backendnek továbbítja.
+Node.js 20.19+ szükséges.
 
-VS Code-ban nyisd meg a `endrody-hajmuvek.code-workspace` fájlt: egyszerre mutatja mindkét projektet.
+## Űrlapok
 
-## Miért két külön projekt?
-
-A frontend statikus fájlokká fordul, és bármilyen egyszerű tárhely kiszolgálja.
-A backend egy szerveren fut, ő fér hozzá az adatbázishoz és a titkos beállításokhoz
-(admin token, SMTP-jelszó), amik soha nem kerülhetnek a böngészőbe. Külön függőségeik
-vannak, és egymástól függetlenül telepíthetők ki.
+Az ajánlatkérő és a workshop-feliratkozás űrlapot a **Netlify Forms** fogadja, saját backend nélkül.
+Mivel az oldal Angular SPA, az űrlapok rejtett statikus másolata a `frontend/public/__forms.html`-ben van:
+ebből ismeri fel őket a Netlify kitelepítéskor. Fejlesztés közben (`npm start`) a küldés csak szimulált.
 
 ## Technika
 
-**Frontend:** standalone komponensek, signalok, lazy loaded route-ok, típusos Reactive Forms,
-`NgOptimizedImage`, saját `TitleStrategy` (SEO), design tokenek, akadálymentesség.
-
-**Backend:** NestJS modulok és DI, `class-validator` DTO-k, TypeORM (SQLite fejlesztéshez,
-PostgreSQL élesben), rate limiting, honeypot spamszűrés, Nodemailer, tokenes admin guard,
-Jest unit tesztek.
+Standalone komponensek, signalok, lazy loaded route-ok, típusos Reactive Forms, saját kétnyelvűség
+külső csomag nélkül, `NgOptimizedImage`, saját `TitleStrategy` (SEO, hreflang), saját szerverről
+kiszolgált betűtípusok, design tokenek, akadálymentesség.
 
 ## Dokumentáció
 
 - [frontend/TANULAS.md](frontend/TANULAS.md) – a frontend felépítése lépésről lépésre
-- [backend/TANULAS-BACKEND.md](backend/TANULAS-BACKEND.md) – a backend, Angular ↔ NestJS szótárral
+- [KITELEPITES.md](KITELEPITES.md) – kitelepítés és a Netlify beállításai

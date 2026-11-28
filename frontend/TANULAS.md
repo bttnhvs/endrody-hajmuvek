@@ -133,10 +133,10 @@ tudják, honnan jön az adat. Ha később egy CMS-ből (pl. Sanity, Contentful) 
 töltöd, csak ezt az egy osztályt írod át. Ez egy interjúkérdésre is jó válasz ("hogyan
 tervezel úgy, hogy később könnyű legyen változtatni?").
 
-`InquiryService` – a saját NestJS backendünknek küldi az ajánlatkérést
-(`POST /api/inquiries`). A HTTP-hibákat (0, 400, 429...) itt fordítja le emberi
-nyelvű üzenetté, így a komponens csak egy kész szöveget kap. A backend
-leírása a `backend/TANULAS-BACKEND.md`-ben van.
+`NetlifyFormsService` – az űrlapokat a Netlify Formsnak küldi (`POST /__forms.html`,
+`application/x-www-form-urlencoded`, `form-name` mezővel). A HTTP-hibákat itt fordítja le
+emberi nyelvű üzenetté, így a komponens csak egy kész szöveget kap. Fejlesztés közben
+(`isDevMode()`) nincs Netlify, ezért ott csak szimulálja a küldést.
 
 ---
 
@@ -176,45 +176,15 @@ form = this.fb.group({
 - Hozzáférhetőség: minden mezőnek van `<label for>`, a hibás mező `aria-invalid`,
   a hibaüzenet `aria-describedby`-jal kapcsolódik.
 
-**Honeypot (spamcsapda):** az űrlapban van egy rejtett `website` mező. Ember nem látja és nem tölti ki,
-a spamrobotok viszont igen – a backend az ilyen kéréseket csendben eldobja. Captcha nélkül,
-a látogatót nem zavarva szűri ki a legtöbb spamet.
+**Honeypot (spamcsapda):** az űrlapban van egy rejtett `bot-field` mező. Ember nem látja és nem tölti ki,
+a spamrobotok viszont igen – a Netlify az ilyen beküldéseket csendben eldobja
+(`netlify-honeypot="bot-field"`). Captcha nélkül, a látogatót nem zavarva szűri ki a legtöbb spamet.
 
-**Proxy fejlesztéshez (`proxy.conf.json`):** az Angular a `localhost:4201`-on fut, a backend a
-`localhost:3001`-en. A `proxy.conf.json` miatt az `ng serve` minden `/api/...` kérést továbbít
-a backendnek, így a frontend kódjában elég a relatív `/api` cím, és fejlesztés közben
-CORS-gondok sincsenek. (Az `angular.json` → `serve.options.proxyConfig` kapcsolja be.)
+**Netlify Forms egy SPA-ban:** a Netlify kitelepítéskor a statikus HTML-ben keresi a
+`data-netlify="true"` űrlapokat. Az Angular az űrlapokat JavaScriptből rajzolja ki, ezeket a Netlify
+nem látja – ezért van egy rejtett, statikus másolatuk a `public/__forms.html`-ben, ugyanazokkal a
+mezőnevekkel. Új mező felvételekor ott is fel kell venni.
 
----
-
-## 7/a. Admin felület (`core/admin/`, `pages/admin/`)
-
-A `/admin` címen a barátnőd böngészőből látja és kezeli a beérkezett ajánlatkéréseket.
-A belépés a backend `.env`-jében lévő `ADMIN_TOKEN`-nel történik. Az oldalra nem vezet
-link, és `noindex` jelölést kap, így a Google sem indexeli.
-
-```
-/admin/belepes ──(token)──► AdminAuthService (signal + sessionStorage)
-/admin ──► adminGuard ──► AdminInquiries ──► AdminApiService ──► interceptor ──► API
-                                                                (Bearer token)
-```
-
-| Fájl | Mit tanulsz belőle |
-|---|---|
-| `admin-auth.service.ts` | Állapot signalban, kifelé `asReadonly()`, `computed` az `isLoggedIn`-hez |
-| `admin-auth.interceptor.ts` | **Funkcionális interceptor** + `HttpContextToken`: csak a megjelölt kérések kapnak tokent; 401-nél kiléptetés |
-| `admin.guard.ts` | **Funkcionális guard**, ami `UrlTree`-t ad vissza (átirányítás, nem üres oldal) |
-| `admin-api.service.ts` | HTTP-hibák átfordítása felhasználónak szóló üzenetté |
-| `admin-inquiries.ts` | Egyetlen „igazság forrása” signal + `computed` szűrés és darabszámok; **optimista frissítés** visszagörgetéssel |
-
-Három fontos gondolat:
-1. **A guard nem biztonság.** A frontend kódja a böngészőben fut, bárki átírhatja. A guard
-   csak kényelmi funkció; az adatot a backend `AdminGuard`-ja védi.
-2. **Miért `HttpContextToken` és nem URL-vizsgálat?** A nyilvános `POST /api/inquiries` és az
-   admin `GET /api/inquiries` URL-je ugyanaz. A címkével explicit, mely kérés kap tokent.
-3. **Optimista frissítés:** az állapotváltás azonnal látszik a felületen. Ha a mentés nem
-   sikerül, a régi érték visszaáll, és hibaüzenet jelenik meg. A signalt mindig új tömbbel
-   frissítjük (`update(list => list.map(...))`), nem írjuk át helyben az elemet.
 
 ---
 
@@ -313,7 +283,7 @@ Sorrendben, egyre nehezebbek:
    paróka melyik előadáshoz készült. A színházi referenciák (darab + színház neve) a legerősebb
    bizalomépítő elemek.
 3. **Ár megjelenítése**: írj be egy `priceFrom` értéket – a `currency` pipe magyar formátumban mutatja.
-4. **Próbáld ki a hibaágakat**: állítsd le a backendet ("nem sikerült elérni"), vagy küldj 6 üzenetet gyorsan egymás után (429-es hiba).
+4. **Próbáld ki a hibaágakat**: éles beállításokkal (`ng serve --configuration production`) a beküldés valódi kérést indít; a böngésző DevToolsában (Network → Offline) kipróbálhatod a "nem sikerült elérni" üzenetet.
 5. **Galéria szűrő az URL-ben**: `/munkaim?kategoria=szinhaz` – tipp: `input()` + `withComponentInputBinding`,
    és a gombok `routerLink`-et kapjanak `[queryParams]`-szal.
 6. **Tesztek**: `ContentService.faqsFor()`, a galéria `visible` computed-ja, az űrlap validációja.

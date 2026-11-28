@@ -62,16 +62,20 @@
         }
       </div>
 
-      <!-- Spamcsapda: képernyőn és képernyőolvasónak is rejtett, Tab-bal sem érhető el -->
+      <!-- Spamcsapda (honeypot): képernyőn és képernyőolvasónak is rejtett, Tab-bal sem érhető el.
+           A Netlify eldobja a beküldést, ha ki van töltve (netlify-honeypot="bot-field"). -->
       <div class="trap" aria-hidden="true">
-        <label for="website">Weboldal</label>
-        <input id="website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
+        <label for="bot-field">Ezt a mezőt hagyd üresen</label>
+        <input id="bot-field" type="text" formControlName="botField" tabindex="-1" autocomplete="off" />
       </div>
 
       <label class="consent">
         <input type="checkbox" formControlName="consent" />
         <span>{{ t.consent }}</span>
       </label>
+      <p class="privacy-link">
+        <a [routerLink]="i18n.path('/adatkezeles')" target="_blank">{{ i18n.ui().common.privacy }}</a>
+      </p>
       @if (showError('consent')) {
         <p class="error">{{ t.consentError }}</p>
       }
@@ -86,9 +90,6 @@
         {{ status() === 'sending' ? t.sending : t.send }}
       </button>
 
-      @if (slow()) {
-        <p class="slow" role="status">{{ t.slow }}</p>
-      }
     </form>
   }
 </section>

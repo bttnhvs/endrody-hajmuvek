@@ -38,17 +38,19 @@ export class SeoTitleStrategy extends TitleStrategy {
     }
 
     /*
-      A `data.noindex` jelölésű oldalakat (pl. admin) a keresők ne indexeljék.
+      A `data.noindex` jelölésű oldalakat a keresők ne indexeljék.
       A route data öröklődik a komponens nélküli szülőtől, ezért elég a
       legmélyebb route-ot nézni. Más oldalra lépve a taget eltávolítjuk.
     */
-    if (route.data['noindex']) {
+    // Fejlesztés alatti módban (SITE.underConstruction) az egész oldal noindex.
+    const noindex = SITE.underConstruction || !!route.data['noindex'];
+    if (noindex) {
       this.meta.updateTag({ name: 'robots', content: 'noindex, nofollow' });
     } else {
       this.meta.removeTag("name='robots'");
     }
 
-    const indexable = !route.data['noindex'] && route.routeConfig?.path !== '**';
+    const indexable = !noindex && route.routeConfig?.path !== '**';
     this.updateLanguageLinks(snapshot.url, indexable);
   }
 

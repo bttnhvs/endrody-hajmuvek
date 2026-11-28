@@ -133,9 +133,9 @@ textarea:focus {
   }
 }
 
-/* Lassú küldésnél (alvó szerver) megjelenő megnyugtató üzenet */
-.slow {
+/* Az adatkezelési tájékoztató linkje a hozzájárulás alatt */
+.privacy-link {
+  margin: -0.75rem 0 0;
+  padding-left: 1.75rem;
   font-size: var(--step--1);
-  color: var(--ink-soft);
-  margin: 0;
 }

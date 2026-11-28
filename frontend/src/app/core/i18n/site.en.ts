@@ -40,7 +40,7 @@ export const SITE_EN: SiteText = {
     ...SITE.about,
     heading: 'The person making your wig',
     paragraphs: [
-      'I am a hairdresser and wigmaker. I lead the hair and make-up department of the Szeged Open-Air Festival, and I work regularly for theatres and on film sets.',
+      'I am a hairdresser and wigmaker, head hairdresser / head of the hair department at the Szeged Open-Air Festival. I work regularly for theatres and on film sets.',
       'In my own workshop in Szeged I make new wigs and facial hair, and I alter, resize and restyle existing pieces. I often work in Budapest too. From the first conversation to the final fitting, you will be talking to me.',
     ],
     tags: ['Hairdresser', 'Key hairstylist', 'Hair designer', 'Theatre and film wigmaker', 'Rococo specialist', 'Wig alterations', 'Szeged', 'Budapest'],
@@ -73,7 +73,7 @@ export const SITE_EN: SiteText = {
     ],
   },
   credits: [
-    { where: 'Szeged Open-Air Festival', role: 'Head of the hair and make-up department', url: SITE.credits[0].url },
+    { where: 'Szeged Open-Air Festival', role: 'Head hairdresser / head of the hair department', url: SITE.credits[0].url },
     { where: 'Budapest theatre productions', role: 'Key hairstylist, hair designer', url: SITE.credits[1].url },
     { where: 'Szeged National Theatre', role: 'Former head of the hair department', url: SITE.credits[2].url },
     {

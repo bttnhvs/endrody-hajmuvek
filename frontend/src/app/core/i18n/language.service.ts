@@ -29,8 +29,6 @@ export class LanguageService {
   readonly site = computed<SiteText>(() => (this.lang() === 'en' ? SITE_EN : SITE));
   /** Ugyanez az oldal a másik nyelven – a nyelvváltó linkje. */
   readonly switchPath = computed(() => alternatePath(this.url()));
-  /** Az admin felület csak magyarul van, ott nincs nyelvváltó. */
-  readonly isAdmin = computed(() => /^\/admin(\/|$)/.test(this.url()));
 
   constructor() {
     inject(Router)

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { adminGuard } from './core/admin/admin.guard';
 import { EN_ROUTES } from './core/i18n/en.routes';
 
 /*
@@ -56,6 +55,12 @@ export const routes: Routes = [
   */
   { path: 'hajpotlas', redirectTo: 'mindennapi' },
   {
+    path: 'adatkezeles',
+    title: 'Adatkezelési tájékoztató',
+    data: { description: 'Milyen személyes adatokat kezel a weboldal, mire, meddig, és milyen jogaid vannak.' },
+    loadComponent: () => import('./pages/privacy/privacy').then((m) => m.Privacy),
+  },
+  {
     path: 'munkaim',
     title: 'Munkáim',
     data: { description: 'Válogatás színházi, filmes és mindennapi parókáimból, szakállaimból.' },
@@ -66,32 +71,6 @@ export const routes: Routes = [
     title: 'Ajánlatkérés',
     data: { description: 'Kérj konzultációt vagy árajánlatot egyedi parókára.' },
     loadComponent: () => import('./pages/inquiry/inquiry').then((m) => m.InquiryPage),
-  },
-  /*
-    Admin felület. Nincs rá link az oldalon, a barátnőd a /admin címet
-    könyvjelzőzi. A `noindex` miatt a Google sem veszi fel a találatok közé.
-
-    A szülő route-nak nincs komponense, csak csoportosít: a gyerekek
-    öröklik a `data`-ját, és mindkettő lazy betöltésű, így a látogatók
-    soha nem töltik le az admin kódját.
-  */
-  {
-    path: 'admin',
-    data: { noindex: true },
-    children: [
-      {
-        path: 'belepes',
-        title: 'Belépés',
-        loadComponent: () => import('./pages/admin/admin-login').then((m) => m.AdminLogin),
-      },
-      {
-        path: '',
-        title: 'Ajánlatkérések',
-        canActivate: [adminGuard],
-        loadComponent: () =>
-          import('./pages/admin/admin-inquiries').then((m) => m.AdminInquiries),
-      },
-    ],
   },
   {
     path: '**',

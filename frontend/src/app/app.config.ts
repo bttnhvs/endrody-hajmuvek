@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeHu from '@angular/common/locales/hu';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
   TitleStrategy,
   provideRouter,
@@ -14,7 +14,6 @@ import {
   withInMemoryScrolling,
 } from '@angular/router';
 import { routes } from './app.routes';
-import { adminAuthInterceptor } from './core/admin/admin-auth.interceptor';
 import { SeoTitleStrategy } from './core/seo-title.strategy';
 
 // Magyar formázás (pénznem, dátum, ezres elválasztó) a pipe-oknak.
@@ -35,8 +34,8 @@ export const appConfig: ApplicationConfig = {
       // A query paraméterek (?tipus=hajpotlas) közvetlenül komponens-inputokba kerülnek.
       withComponentInputBinding(),
     ),
-    // Az interceptor csak az ADMIN_REQUEST címkés kérésekre tesz tokent (lásd core/admin).
-    provideHttpClient(withFetch(), withInterceptors([adminAuthInterceptor])),
+    // A HttpClient-tel küldjük az űrlapokat a Netlify Formsnak (lásd core/netlify-forms.service.ts).
+    provideHttpClient(withFetch()),
     { provide: LOCALE_ID, useValue: 'hu' },
     // A gyári TitleStrategy helyett a sajátunkat használjuk (SEO).
     { provide: TitleStrategy, useClass: SeoTitleStrategy },

@@ -2,8 +2,8 @@ import { Component, OnInit, computed, inject, input, signal } from '@angular/cor
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
-import { FORM_INQUIRY_TYPES } from '../../core/inquiry-labels';
-import { InquiryService } from '../../core/inquiry.service';
+import { INQUIRY_TYPES, typeLabel } from '../../core/inquiry-labels';
+import { NetlifyFormsService } from '../../core/netlify-forms.service';
 import { InquiryType } from '../../core/models';
 import { SITE } from '../../core/site.config';
 import { LanguageService } from '../../core/i18n/language.service';
@@ -11,13 +11,14 @@ import { LanguageService } from '../../core/i18n/language.service';
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 /*
-  Ajánlatkérő űrlap – típusos Reactive Forms.
+  Ajánlatkérő űrlap – típusos Reactive Forms, beküldés a Netlify Formsnak.
 
   - NonNullableFormBuilder: a mezők típusa string (nem string | null),
     és reset() után az eredeti értékre állnak vissza.
   - A `tipus` input a ?tipus=... query paraméterből jön (router binding),
-    így a "Diszkrét konzultációt kérek" gomb előre kiválasztja a típust.
+    így az aloldalak "Ajánlatot kérek" gombja előre kiválasztja a típust.
   - A küldés állapota egy signal: idle → sending → sent / error.
+  - A beküldött üzeneteket Judit a Netlify felületén látja (Forms), és e-mailt is kap róluk.
 */
 @Component({
   selector: 'app-inquiry',
@@ -27,24 +28,22 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
 })
 export class InquiryPage implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
-  private readonly inquiries = inject(InquiryService);
+  private readonly forms = inject(NetlifyFormsService);
   protected readonly i18n = inject(LanguageService);
 
-  /** ?tipus=hajpotlas */
+  /** ?tipus=szinhaz */
   readonly tipus = input<string>();
 
   /** A típusok azonosítója közös, a felirat az aktuális nyelvet követi. */
   protected readonly types = computed(() =>
-    FORM_INQUIRY_TYPES.map((t) => ({ id: t.id, label: this.i18n.ui().inquiry.types[t.id] })),
+    INQUIRY_TYPES.map((t) => ({ id: t.id, label: this.i18n.ui().inquiry.types[t.id] })),
   );
   protected readonly site = SITE;
   protected readonly tel = SITE.phone.replace(/\s/g, '');
   protected readonly status = signal<Status>('idle');
   protected readonly submitted = signal(false);
-  /** A backendtől kapott, felhasználónak szóló hibaüzenet. */
+  /** Felhasználónak szóló hibaüzenet, ha a küldés nem sikerült. */
   protected readonly errorMessage = signal('');
-  /** Igaz, ha a küldés már szokatlanul sokáig tart (alvó szerver). */
-  protected readonly slow = signal(false);
 
   protected readonly form = this.fb.group({
     type: this.fb.control<InquiryType>('mindennapi', Validators.required),
@@ -53,14 +52,13 @@ export class InquiryPage implements OnInit {
     phone: [''],
     message: ['', [Validators.required, Validators.minLength(10)]],
     consent: [false, Validators.requiredTrue],
-    // Honeypot: a felhasználó nem látja, a spamrobotok kitöltik (a backend eldobja)
-    website: [''],
+    // Honeypot: a látogató nem látja, a spamrobotok kitöltik – a Netlify az ilyet eldobja.
+    botField: [''],
   });
 
   ngOnInit(): void {
     const fromUrl = this.tipus();
-    // Egy régi ?tipus=hajpotlas link esetén marad az alapértelmezett típus.
-    if (FORM_INQUIRY_TYPES.some((t) => t.id === fromUrl)) {
+    if (INQUIRY_TYPES.some((t) => t.id === fromUrl)) {
       this.form.controls.type.setValue(fromUrl as InquiryType);
     }
   }
@@ -79,23 +77,21 @@ export class InquiryPage implements OnInit {
     }
 
     this.status.set('sending');
+    const value = this.form.getRawValue();
 
-    /*
-      A Render ingyenes szervere tétlenség után elalszik, az első kérés
-      ilyenkor fél percig is tarthat. Ha 4 mp után sincs válasz, megnyugtató
-      üzenetet mutatunk, hogy a látogató ne higgye, hogy elromlott az oldal.
-    */
-    const slowTimer = setTimeout(() => this.slow.set(true), 4000);
-
-    this.inquiries
-      .send(this.form.getRawValue())
-      .pipe(
-        finalize(() => {
-          clearTimeout(slowTimer);
-          this.slow.set(false);
-          this.submitted.set(false);
-        }),
-      )
+    this.forms
+      .submit('ajanlatkeres', {
+        'bot-field': value.botField,
+        // A típus magyar felirata kerül a Netlifyba, hogy Judit azonnal értse.
+        type: typeLabel(value.type),
+        name: value.name,
+        email: value.email,
+        phone: value.phone,
+        message: value.message,
+        consent: value.consent ? 'igen' : 'nem',
+        language: this.i18n.lang(),
+      })
+      .pipe(finalize(() => this.submitted.set(false)))
       .subscribe({
         next: () => {
           this.status.set('sent');

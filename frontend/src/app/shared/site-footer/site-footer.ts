@@ -48,7 +48,10 @@ import { LanguageService } from '../../core/i18n/language.service';
         @if (i18n.ui().footer.fundingTranslation; as translation) {
           <p class="funding" lang="en">{{ translation }}</p>
         }
-        <p>© {{ year }} {{ i18n.site().name }} {{ i18n.site().subtitle }}</p>
+        <p>
+          © {{ year }} {{ i18n.site().name }} {{ i18n.site().subtitle }} ·
+          <a [routerLink]="i18n.path('/adatkezeles')">{{ i18n.ui().common.privacy }}</a>
+        </p>
       </div>
     </footer>
   `,

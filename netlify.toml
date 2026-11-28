@@ -10,9 +10,11 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# SPA-átirányítás: minden ismeretlen útvonal (pl. /admin, /hajpotlas) az index.html-t kapja,
-# és az Angular router dönti el, mit mutasson. Enélkül egy könyvjelzőzött /admin cím
-# vagy egy oldalfrissítés 404-et adna, mert a szerveren nincs "admin" nevű fájl.
+# SPA-átirányítás: minden ismeretlen útvonal (pl. /szinhaz, /en/contact) az index.html-t kapja,
+# és az Angular router dönti el, mit mutasson. Enélkül egy könyvjelzőzött aloldal
+# vagy egy oldalfrissítés 404-et adna, mert a szerveren nincs ilyen nevű fájl.
+# A létező fájlokra (pl. a rejtett űrlapokat tartalmazó /__forms.html) ez nem vonatkozik,
+# ezért oda gond nélkül érkezhetnek a Netlify Forms beküldései.
 # (A létező fájlokat – képek, JS – a Netlify ettől még közvetlenül kiszolgálja.)
 [[redirects]]
   from = "/*"

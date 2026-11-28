@@ -32,7 +32,7 @@ const SEGMENT_TEXT: Record<Segment, SegmentText> = {
     offers: [
       'A parting and hairline that move naturally',
       'Human hair or high-quality synthetic hair, matched to how you wear it',
-      'Cut and styled on you into the final look',
+      'Cutting into shape and styling',
       'Washing, refreshing and repairs, even if you bought the wig elsewhere',
     ],
   },
@@ -45,7 +45,7 @@ const SEGMENT_TEXT: Record<Segment, SegmentText> = {
     offers: [
       'A completely new hairstyle for your existing wig',
       'Special-occasion styles for wigs and hairpieces',
-      'Period hairstyles from the Rococo to the Victorian era',
+      'Period hairstyles from ancient Egypt to the 20th century',
       'Washing and restyling to make the wig look fresh again',
     ],
   },
@@ -54,8 +54,8 @@ const SEGMENT_TEXT: Record<Segment, SegmentText> = {
 const PROCESS_TEXT: ProcessStep[] = [
   { title: 'Conversation', text: 'You tell me what the wig is for and what you would like. We look at hair type, colour and length.', duration: '30–45 min' },
   { title: 'Measuring', text: 'We take the shape of your head so the base fits precisely and does not slip.', duration: '20 min' },
-  { title: 'Knotting and wefting', text: 'I knot the hairs one by one into the lace base, or weave them into wefts on a frame. This is what makes a wig look natural.', duration: '2–6 weeks' },
-  { title: 'Fitting and adjusting', text: 'You try it on, then I cut and style the final look on you.', duration: '1 session' },
+  { title: 'Knotting and wefting', text: 'First I sew the foundation, the base of the wig, to your measurements. Then I work in the hair using the technique that suits your needs.', duration: '2–6 weeks' },
+  { title: 'Fitting and adjusting', text: 'You try it on, and once the size is right, all that is left is cutting it into shape and styling it.', duration: '1 session' },
   { title: 'Handover and care', text: 'I show you how to wash and store it. Regular refreshes are available if you need them.', duration: 'ongoing' },
 ];
 

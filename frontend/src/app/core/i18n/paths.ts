@@ -12,6 +12,7 @@ export const EN_SLUGS: Record<string, string> = {
   hajpotlas: 'hair-loss', // megszűnt oldal, csak az átirányítás miatt van itt
   munkaim: 'work',
   ajanlatkeres: 'contact',
+  adatkezeles: 'privacy',
 };
 
 const HU_SLUGS = Object.fromEntries(Object.entries(EN_SLUGS).map(([hu, en]) => [en, hu]));

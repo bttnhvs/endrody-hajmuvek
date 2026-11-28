@@ -26,7 +26,7 @@ export interface SegmentInfo {
   offers: string[];
   /**
     Az ajánlatkérő űrlapon előre kiválasztott típus. Nem mindig egyezik az id-val:
-    a stylinghoz nincs külön típus a backendben, ezért az "egyeb"-et választja.
+    a stylinghoz nincs külön ajánlatkérés-típus, ezért az "egyeb"-et választja.
   */
   inquiryType: InquiryType;
   /** Kiinduló ár Ft-ban; null = "egyedi árajánlat". */
@@ -65,37 +65,5 @@ export interface Faq {
   segments: Segment[];
 }
 
-/*
-  Az ajánlatkérés típusai – a backend INQUIRY_TYPES listájával egyezik, ezért külön soroljuk fel,
-  nem a Segment-ből számoljuk: egy új vevőkör (pl. styling) nem jelent új backend-típust.
-  A 'hajpotlas' a korábban beküldött kérések miatt marad (admin lista), az űrlapon nem választható.
-*/
-export type InquiryType = 'szinhaz' | 'mindennapi' | 'hajpotlas' | 'egyeb';
-
-/** Amit az ajánlatkérő űrlap elküld. */
-export interface Inquiry {
-  type: InquiryType;
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-  consent: boolean;
-  /** Rejtett spamcsapda (honeypot) – egy ember üresen hagyja. */
-  website: string;
-}
-
-/** Egy ajánlatkérés feldolgozottsága (a backend INQUIRY_STATUSES-ával egyezik). */
-export type InquiryStatus = 'uj' | 'folyamatban' | 'lezarva';
-
-/** Egy elmentett ajánlatkérés, ahogy az admin végpont visszaadja. */
-export interface AdminInquiry {
-  id: string;
-  type: InquiryType;
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-  status: InquiryStatus;
-  /** ISO dátum szövegként (a JSON-ban nincs Date típus). */
-  createdAt: string;
-}
+/** Az ajánlatkérő űrlap típusai (a Netlifyba a magyar feliratuk kerül, lásd inquiry-labels.ts). */
+export type InquiryType = 'szinhaz' | 'mindennapi' | 'egyeb';

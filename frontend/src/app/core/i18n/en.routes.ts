@@ -46,6 +46,12 @@ export const EN_ROUTES: Routes = [
   // A megszűnt hajpótlás-oldal régi címe (/en/hair-loss) a mindennapira visz (lásd app.routes.ts).
   { path: EN_SLUGS['hajpotlas'], redirectTo: EN_SLUGS['mindennapi'] },
   {
+    path: EN_SLUGS['adatkezeles'],
+    title: 'Privacy notice',
+    data: { description: 'What personal data this website handles, why, for how long, and what your rights are.' },
+    loadComponent: () => import('../../pages/privacy/privacy').then((m) => m.Privacy),
+  },
+  {
     path: EN_SLUGS['munkaim'],
     title: 'My work',
     data: { description: 'A selection of my theatre, film and everyday wigs and beards.' },

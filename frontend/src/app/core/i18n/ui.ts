@@ -12,6 +12,8 @@ const hu = {
     cta: 'Konzultációt kérek',
     skip: 'Ugrás a tartalomra',
     etsy: 'Etsy-bolt',
+    privacy: 'Adatkezelési tájékoztató',
+    notice: 'Az oldal fejlesztés alatt áll, az űrlapok még nem működnek.',
   },
   nav: {
     theatre: 'Színháznak',
@@ -29,7 +31,7 @@ const hu = {
   about: { tagsAria: 'Röviden rólam', write: 'Írj nekem' },
   home: {
     h1: 'Parókák színpadra, filmre és a mindennapokra',
-    lead: 'Színházakban és a filmiparban szereztem több éves tapasztalatot, és ott szerettem bele igazán a szakmába. Egyedi megrendelésre készítek teljes parókát, pótrészt, szakállt, bajuszt és barkót, és vállalom a meglévő parókák átalakítását, méretre igazítását, karbantartását, vagy akár egy teljesen új frizurát is rájuk.',
+    lead: 'Színházakban és a filmiparban szereztem több éves tapasztalatot, és ott szerettem bele igazán a szakmába. Egyedi megrendelésre készítek teljes parókát, pótrészt, szakállt, bajuszt és barkót, és vállalom a meglévő parókák átalakítását, méretre igazítását, karbantartását, vagy akár egy teljesen új frizura elkészítését.',
     work: 'Munkáim',
     heroAlt: 'Platinaszőke, hullámos vintage paróka a fejformán',
     insetAlt: 'Sötétbarna, kunkorodó bajusz csipkealapon',
@@ -88,7 +90,6 @@ const hu = {
     types: {
       szinhaz: 'Színházi / filmes munka',
       mindennapi: 'Mindennapi paróka',
-      hajpotlas: 'Paróka hajvesztés miatt',
       egyeb: 'Átalakítás, styling vagy más',
     } as Record<InquiryType, string>,
     name: 'Neved',
@@ -106,7 +107,6 @@ const hu = {
     errorAfter: ' címre.',
     sending: 'Küldés…',
     send: 'Üzenet küldése',
-    slow: 'Még dolgozom rajta. Az első küldés néha fél percig is eltarthat – kérlek, ne zárd be az oldalt.',
   },
   workshop: {
     title: 'Workshopok és magánórák – hamarosan',
@@ -116,7 +116,7 @@ const hu = {
       { title: 'Formázás', text: 'korhű frizurák, rokokó, fantasy' },
     ],
     cards: [
-      { title: 'Csoportos workshopok', text: 'Kis létszámú alkalmak, akár egy hangulatos, régi bútoros nappaliban.' },
+      { title: 'Csoportos workshopok', text: 'Kis létszámú alkalmak barátokkal vagy hasonló érdeklődésű emberekkel.' },
       { title: 'Magánórák', text: 'Egyéni órák a saját tempódban, arra a technikára figyelve, ami téged érdekel.' },
     ],
     emailLabel: 'E-mail-címed',
@@ -127,12 +127,9 @@ const hu = {
     consentError: 'A feliratkozáshoz szükség van a hozzájárulásodra.',
     success: 'Köszönöm! Szólok, amint indul az első alkalom.',
     error: 'Most nem sikerült a feliratkozás. Próbáld újra később.',
-    fallback: 'Érdeklődöm',
   },
   errors: {
     network: 'Nem sikerült elérni a szervert. Ellenőrizd az internetkapcsolatot, és próbáld újra.',
-    invalid: 'Néhány mező hibásan van kitöltve.',
-    rateLimit: 'Rövid időn belül túl sok üzenet érkezett innen. Próbáld újra néhány perc múlva.',
     generic: 'Nem sikerült elküldeni az üzenetet. Próbáld újra később.',
   },
   notFound: {
@@ -150,6 +147,8 @@ const en: UiText = {
     cta: 'Book a consultation',
     skip: 'Skip to content',
     etsy: 'Etsy shop',
+    privacy: 'Privacy notice',
+    notice: 'This website is under construction. The forms are not working yet.',
   },
   nav: {
     theatre: 'For theatre',
@@ -231,7 +230,6 @@ const en: UiText = {
     types: {
       szinhaz: 'Theatre / film work',
       mindennapi: 'Everyday wig',
-      hajpotlas: 'Wig for hair loss',
       egyeb: 'Alterations, restyling or other',
     },
     name: 'Your name',
@@ -249,7 +247,6 @@ const en: UiText = {
     errorAfter: '.',
     sending: 'Sending…',
     send: 'Send message',
-    slow: 'Still working on it. The first message can sometimes take up to half a minute, so please keep this page open.',
   },
   workshop: {
     title: 'Workshops & private lessons: coming soon',
@@ -259,7 +256,7 @@ const en: UiText = {
       { title: 'Styling', text: 'period hairstyles, rococo, fantasy' },
     ],
     cards: [
-      { title: 'Group workshops', text: 'Small-group sessions, perhaps in a cosy living room full of antique furniture.' },
+      { title: 'Group workshops', text: 'Small-group sessions with friends or like-minded people.' },
       { title: 'Private lessons', text: 'One-to-one lessons at your own pace, focused on the techniques you want to learn.' },
     ],
     emailLabel: 'Your email address',
@@ -270,12 +267,9 @@ const en: UiText = {
     consentError: 'We need your consent to sign you up.',
     success: 'Thank you! I will let you know as soon as the first session is announced.',
     error: 'Sign-up did not work just now. Please try again later.',
-    fallback: 'Enquire',
   },
   errors: {
     network: 'Could not reach the server. Check your internet connection and try again.',
-    invalid: 'Some fields are not filled in correctly.',
-    rateLimit: 'Too many messages were sent from here in a short time. Please try again in a few minutes.',
     generic: 'The message could not be sent. Please try again later.',
   },
   notFound: {

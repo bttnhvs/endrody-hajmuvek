@@ -319,7 +319,7 @@ a.credit__where:hover {
     padding-block: var(--hero-pad);
     /* A fejléc alatti teljes képernyőt kitölti, így a következő szekció nem lóg bele.
        Az 1px a fejléc alsó vonala. Ha a tartalom magasabb, a min-height engedi nőni. */
-    min-height: calc(100svh - 4.75rem - 1px);
+    min-height: calc(100svh - 4.75rem - 1px - var(--notice-h, 0px));
   }
 
   .hero h1 {
@@ -341,7 +341,7 @@ a.credit__where:hover {
 
   /* A kép 4:5 arányú, ezért a szélessége a rendelkezésre álló magasság 80%-a lehet. */
   .hero__art {
-    width: min(100%, 26.25rem, (100svh - 4.75rem - 2 * var(--hero-pad)) * 0.8);
+    width: min(100%, 26.25rem, (100svh - 4.75rem - var(--notice-h, 0px) - 2 * var(--hero-pad)) * 0.8);
   }
 }
 

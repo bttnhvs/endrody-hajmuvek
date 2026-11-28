@@ -1,5 +1,3 @@
-import { environment } from '../../environments/environment';
-
 const IMDB_URL = 'https://www.imdb.com/name/nm9991615/bio/';
 
 /*
@@ -7,6 +5,14 @@ const IMDB_URL = 'https://www.imdb.com/name/nm9991615/bio/';
   Minden, ami TODO-val van jelölve, helykitöltő.
 */
 export const SITE = {
+  /*
+    FEJLESZTÉS ALATTI MÓD – egyetlen kapcsoló két dologhoz:
+    - felső sáv: "Az oldal fejlesztés alatt áll, az űrlapok még nem működnek."
+    - noindex: a keresők ne vegyék fel az oldalt a találatok közé.
+    Élesítéskor állítsd false-ra, és töltsd fel újra.
+  */
+  underConstruction: true,
+
   name: 'Endrődy Hajművek',
   subtitle: 'Fodrászműhely',
   tagline: 'Kézzel készült parókák színpadra, filmre és hétköznapokra',
@@ -21,9 +27,6 @@ export const SITE = {
   // TODO: az Etsy-bolt címe, pl. 'https://www.etsy.com/shop/BoltNeve'.
   // Amíg üres, a menüben és a láblécben nincs link, a főoldali gomb az ajánlatkérésre visz.
   etsy: '',
-  // TODO: a workshop-feliratkozás Formspree-azonosítója (a https://formspree.io/f/XXXX cím vége).
-  // Saját űrlap kell ehhez az oldalhoz, hogy a feliratkozók a barátnődhöz kerüljenek.
-  workshopFormspreeId: '',
 
   /*
     Támogatói tájékoztató – a Facebook-oldalon is szerepel, a weboldalon
@@ -41,7 +44,7 @@ export const SITE = {
     makerName: '', // TODO: pl. 'Endrődy Kata' – üresen hagyva nem jelenik meg
     heading: 'Aki a parókádat készíti',
     paragraphs: [
-      'Fodrász és parókakészítő vagyok. A Szegedi Szabadtéri Játékokon a fodrász- és sminkrészleget vezetem, és rendszeresen dolgozom színházaknak és filmforgatásokon is.',
+      'Fodrász és parókakészítő vagyok, a Szegedi Szabadtéri Játékok vezető fodrásza / fodrásztár vezetője. Rendszeresen dolgozom színházaknak és filmforgatásokon is.',
       'A szegedi műhelyemben új parókákat és szőrzeteket készítek, és meglévő darabokat alakítok át, igazítok méretre és formázok újra. Gyakran dolgozom Budapesten is. Az első beszélgetéstől az utolsó igazításig velem beszélsz.',
     ],
     /** Rövid címkék a szöveg alatt. TODO: igazítsátok a valósághoz. */
@@ -90,7 +93,7 @@ export const SITE = {
   credits: [
     {
       where: 'Szegedi Szabadtéri Játékok',
-      role: 'A fodrász- és sminkrészleg vezetője',
+      role: 'Vezető fodrász / fodrásztár vezetője',
       url: '',
     },
     {
@@ -111,12 +114,4 @@ export const SITE = {
       link: { label: 'a filmes munkák az IMDb-n', url: IMDB_URL },
     },
   ],
-
-  /*
-    A saját NestJS backendünk címe – környezetenként más, ezért az
-    environments mappából jön:
-    - `ng serve`: '/api' (a proxy.conf.json továbbítja a localhost:3001-re)
-    - `ng build`: a Renderen futó API teljes címe
-  */
-  apiUrl: environment.apiUrl,
 } as const;

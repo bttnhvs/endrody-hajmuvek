@@ -42,7 +42,7 @@ export const SEGMENTS: SegmentInfo[] = [
     offers: [
       'Természetesen mozgó választék és hajvonal',
       'Emberi haj vagy jó minőségű műhaj, a viselési szokásaidhoz igazítva',
-      'Levágás és formázás rajtad, a végleges frizurára',
+      'Fazonra vágás és formázás',
       'Mosás, frissítés és javítás – akkor is, ha a parókát máshol vetted',
     ],
     priceFrom: null,
@@ -61,7 +61,7 @@ export const SEGMENTS: SegmentInfo[] = [
     offers: [
       'Teljesen új frizura a meglévő parókádra',
       'Alkalmi és ünnepi frizurák parókára és pótrészre',
-      'Korhű frizurák a rokokótól a viktoriánus korig',
+      'Korhű frizurák az ókori Egyiptomtól a 20. századig',
       'Mosás és újrafésülés, hogy a paróka újra friss legyen',
     ],
     priceFrom: null,
@@ -81,12 +81,12 @@ export const PROCESS: ProcessStep[] = [
   },
   {
     title: 'Csomózás és tresszelés',
-    text: 'A hajszálakat egyenként csomózom a csipkealapba, vagy tresszelő kereten tincsekbe fűzöm – ettől lesz természetes a fejbőr és a választék.',
+    text: 'Először a méreteid alapján megvarrom a montúrát, ami a paróka alapja. Ezután az igényekhez passzoló technikával bedolgozom a hajat.',
     duration: '2–6 hét',
   },
   {
     title: 'Próba és igazítás',
-    text: 'Felpróbálod, utána levágom és formázom a végleges frizurát rajtad.',
+    text: 'Felpróbálod, és ha a méret stimmel, akkor már csak a fazonra vágás és a styling van hátra.',
     duration: '1 alkalom',
   },
   {

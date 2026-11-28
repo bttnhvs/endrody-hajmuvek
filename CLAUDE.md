@@ -1,93 +1,79 @@
 # Endrődy Hajművek – projektkontextus Claude számára
 
 ## A projekt
-Full-stack weboldal az **Endrődy Hajművek Fodrászműhely** számára (egy barátnőm vállalkozása,
-Budapest). Kézzel csomózott parókákat készít, eddig főleg színházaknak; a cél, hogy a
-mindennapi viseletre és hajvesztés (kemoterápia, alopécia) esetére készült parókák felé is bővüljön.
-Ez egyben a **portfólióprojektem**: Angular-fejlesztő vagyok (4 év, medior), most tanulom a backendet.
+Weboldal az **Endrődy Hajművek Fodrászműhely** számára (egy barátnőm, Judit vállalkozása,
+Szeged, gyakran Budapesten). Parókákat, pótrészeket és szőrzeteket készít színházaknak, filmeknek
+és a mindennapokra, valamint meglévő parókákat alakít át és formáz újra.
+Ez egyben a **portfólióprojektem**: Angular-fejlesztő vagyok (4 év, medior).
 
 **Kérés:** magyarul kommunikálj, és amikor kódot írsz vagy módosítasz, magyarázd el, mit és miért –
 tanulni szeretnék belőle. A kódkommentek is magyarul vannak.
 
-## Felépítés (monorepo)
+## Felépítés
 ```
 frontend/   Angular 20 – standalone komponensek, signalok, lazy route-ok, típusos Reactive Forms
-backend/    NestJS 11 – TypeORM (sql.js SQLite fejlesztéshez, PostgreSQL élesben), class-validator,
-            @nestjs/throttler, Resend (e-mail), tokenes AdminGuard, Jest
+netlify.toml  a Netlify build- és átirányítási beállításai (a repó gyökerében)
 ```
-Részletes magyarázat: `frontend/TANULAS.md`, `backend/TANULAS-BACKEND.md`.
+Saját backend nincs: az űrlapokat a **Netlify Forms** fogadja. (2026-11-28-ig volt egy NestJS backend
+Render + Neon + Resend szolgáltatásokkal, és egy `/admin` oldal – ezek a git előzményekben megvannak.)
+Részletes magyarázat: `frontend/TANULAS.md`, kitelepítés: `KITELEPITES.md`.
 
 ### Frontend – fontos fájlok
-- `src/app/core/site.config.ts` – elérhetőségek, `apiUrl`, a "Rólam" szövegei, OFA-támogatói szöveg
-- `src/app/core/content.ts` – szegmensek (szinhaz / mindennapi / hajpotlas), folyamat, galéria, GYIK
-- `src/app/core/models.ts` – típusok; a munkák kategóriái: karakter / termeszetes / arcszor / muhely
+- `src/app/core/site.config.ts` – elérhetőségek, linkek, a "Rólam" szövegei, színházak, referenciák,
+  OFA-támogatói szöveg, és a **`underConstruction`** kapcsoló (felső sáv + noindex)
+- `src/app/core/content.ts` – vevőkörök (szinhaz / mindennapi / styling), folyamat, galéria, GYIK
+- `src/app/core/i18n/` – angol változat: `LanguageService`, `ui.ts` (feliratok), `site.en.ts`,
+  `content.en.ts`, `en.routes.ts`, `paths.ts` (útvonalak), `privacy.ts` (adatkezelési tájékoztató HU+EN)
+- `src/app/core/netlify-forms.service.ts` – az űrlapok beküldése a Netlify Formsnak
+- `public/__forms.html` – az űrlapok **rejtett statikus másolata**, hogy a Netlify felismerje őket.
+  Ha egy Angular-űrlapon új mezőt veszel fel, ide is be kell írni ugyanazzal a névvel!
 - `src/app/pages/segment/` – egy komponens a három vevőkör-oldalhoz (route data → input binding)
-- `src/app/shared/about-maker/` – "Rólam" blokk (`compact` változat a hajpótlás oldalon)
-- `public/images/munkak/` – a munkák fotói (1100 px-re kicsinyítve), `public/images/logo.png`,
-  `public/images/rolam-illusztracio.svg` (SVG illusztráció a készítőről, később valódi fotóra cserélhető)
-- `proxy.conf.json` – `ng serve` alatt az `/api` kéréseket a `localhost:3001`-re továbbítja
+- `src/app/shared/workshop-teaser/` – workshop-blokk feliratkozással
+- `public/images/munkak/` – a munkák fotói (1100 px-re kicsinyítve), `public/images/og-image.jpg`
+  (linkelőnézet), favicon és telefonos ikonok a `public/` gyökerében
 
-### Backend – végpontok
-- `GET /api/health`
-- `POST /api/inquiries` – ajánlatkérés (validáció, honeypot `website` mező, rate limit 5 / 10 perc)
-- `GET /api/inquiries?status=` és `PATCH /api/inquiries/:id/status` – `Authorization: Bearer <ADMIN_TOKEN>`
-- Próbakérések: `backend/api.http` (REST Client bővítmény)
+### Űrlapok (Netlify Forms)
+- `ajanlatkeres`: bot-field, type (magyar felirat), name, email, phone, message, consent, language
+- `workshop`: bot-field, email, consent, language
+- Beküldés: `POST /__forms.html`, `application/x-www-form-urlencoded`, `form-name` mezővel.
+  Honeypot: `bot-field` (`netlify-honeypot="bot-field"`). `ng serve` alatt nincs Netlify, ott a
+  szolgáltatás csak szimulálja a küldést (`isDevMode()`).
 
 ## Dizájn
 - Színek a logóból: zöld koszorú (`--leaf #8fc27d`, `--sage #668559`, `--green #5e7d53`) és rózsaszín
   rózsák (`--blush #ee97ba`, gombok: `--rose #a8406b`). Fehér háttér, világos levélzöld sávok.
   Kérés volt: **ne legyen túl sötét zöld**, barátságos hangulat.
-- Betűk: Bodoni Moda (címek), Hanken Grotesk (szöveg).
+- Betűk: Bodoni Moda (címek), Hanken Grotesk (szöveg). Saját szerverről (Fontsource npm-csomagok,
+  `angular.json` → `styles`), nem a Google Fonts-ból, ezért a CSS-ben a nevük „… Variable”.
 - Visszatérő motívum: íves (arch) képkeret + vékony zöld ív (a logó koszorújára utal).
+- Asztali nézetben a `html` betűmérete 72% (1200 px felett), a címek külön skálát kapnak.
 - Lábléc: kötelező OFA / Vállalkozó Start II. támogatói szöveg – maradjon benne.
 
-## Állapot
-- 2026-10-29: első futtatás kész. Mindkét projekt települ és fordul, a backend 5 unit tesztje zöld,
-  a végpontok és a frontend oldalai böngészőben ellenőrizve. A frontendhez még nincs tesztkörnyezet.
-- Ezen a gépen párhuzamosan egy másik weboldal is fejlesztés alatt áll (WSL-ben), ami a 3000-es és
-  4200-as portot használja. Ezért:
-  - backend: **3001** (`.env` `PORT`, `main.ts` alapértéke, `proxy.conf.json`, `api.http`)
-  - frontend: **4201** (`angular.json` → `serve.options.port`, backend `CORS_ORIGIN`)
-  Ha portot váltasz, mindegyik helyen át kell írni.
-- Helykitöltők (TODO): e-mail, telefonszám (`site.config.ts`), `about.makerName`, a munkák pontos
-  címei és a színházi referenciák (melyik paróka melyik előadáshoz készült), árak (`priceFrom: null`).
-- 2026-10-29: e-mail küldés Nodemailer/SMTP helyett **Resend** (HTTP API, Render-barát).
-  `RESEND_API_KEY` nélkül száraz mód. A vevőnek szóló visszaigazolás alapból ki van kapcsolva
-  (`MAIL_CONFIRM_TO_CUSTOMER`). Backend: 10 unit teszt zöld. Resend-kulcs még nincs beállítva.
-- 2026-10-29: **admin felület** kész (`/admin`, `/admin/belepes`): token a sessionStorage-ben,
-  funkcionális interceptor `HttpContextToken`-nel, guard, signal alapú lista szűrővel és optimista
-  állapotváltással. A közös feliratok: `core/inquiry-labels.ts`. Build zöld, böngészőben még nincs
-  vizuálisan ellenőrizve.
+## Tartalmi szabályok (Judit kérései)
+- Nem a „kézzel csomózott” a fő üzenet (punching és tressz is van). A Szegedi Szabadtéri Játékok csak
+  a referenciákban és a bemutatkozás első mondatában szerepel.
+- Nincs: hajvesztés-oldal (`/hajpotlas` → `/mindennapi` átirányítás), bérlés, gyors csere, házhoz menés,
+  NEAK, cosplay szó, Vámpírok bálja. Csak az **online** első konzultáció ingyenes, a személyes fizetős.
+- Szövegmódosításkor **mindkét nyelvet** frissíteni kell.
 
-- 2026-10-29: **kitelepítés előkészítve**: `render.yaml`, `netlify.toml`, `KITELEPITES.md`
-  (lépésről lépésre), `frontend/src/environments/` (fejlesztés: `/api`, éles:
-  `https://hajmuvek-api.onrender.com/api`, `angular.json` fileReplacements). Az űrlap 4 mp után
-  „Még dolgozom rajta” üzenetet mutat (Render cold start). 
-- 2026-10-30: **git-repó kész**, GitHubon: https://github.com/bttnhvs/endrody-hajmuvek (ág: `main`). A `.claude/` mappa a `.gitignore`-ban van (bejelentkezési adatok!).
-- 2026-11-11: **élesben fut.** Frontend: https://e-hajmuvek.netlify.app (Netlify, a `main` ágról
-  automatikusan települ). Backend: https://hajmuvek-api.onrender.com/api (Render Blueprint, Neon DB).
-  A CORS (`CORS_ORIGIN`) a Netlify-címre van állítva, ellenőrizve. Az élő űrlap- és admin-próba
-  (KITELEPITES.md 6. lépés) még hátravan; a Resend beállítása bizonytalan.
-- 2026-11-22: **angol változat** (`/en`, `/en/theatre`, `/en/everyday`, `/en/hair-loss`, `/en/work`,
-  `/en/contact`), külső csomag nélkül: `frontend/src/app/core/i18n/` (`LanguageService`, `ui.ts`,
-  `site.en.ts`, `content.en.ts`, `en.routes.ts`). Szövegmódosításkor mindkét nyelvet frissíteni kell.
-  Az admin csak magyar. Az OFA-szöveg angol oldalon is magyarul marad, alatta a fordítással.
-- 2026-11-22: márkanév nyelvenként: magyarul **Endrődy Hajművek**, angolul **Endrődy Wigs** (`SITE.name`,
-  `SITE_EN.name`). Domain: **endrodywigs.com**, e-mail: **hello@endrodywigs.com**. A domain ekkor még nem élt
-  (nincs DNS/MX), bekötése után a Render `CORS_ORIGIN`-be is fel kell venni.
-- 2026-11-22: **workshop-blokk** a főoldal alján (`shared/workshop-teaser`), feliratkozás Formspree-vel.
-  A `SITE.workshopFormspreeId` még üres: élesben addig az űrlap helyett egy ajánlatkérő link látszik.
-- 2026-11-25: **Judit visszajelzése átvezetve** (`JUDIT-VISSZAJELZES.md`): nem a kézi csomózás a fő üzenet,
-  a Szabadtéri csak a referenciákban és a bemutatkozás első mondatában, a hajpótlás-oldal megszűnt
-  (`/hajpotlas` → `/mindennapi`, `/en/hair-loss` → `/en/everyday` átirányítás), nincs bérlés, házhoz menés,
-  NEAK, csak az online első konzultáció ingyenes, Etsy: Történelmi + Fantasy, új színház- és társulatlista.
-  A `hajpotlas` ajánlatkérés-típus a régi rekordok miatt megmaradt, az űrlapon nem választható.
-  3. vevőkör: **Styling és alkalmi frizurák** (`/styling`, `/en/styling`); az ajánlatkérésen „egyeb” típust választ,
-  mert a backendben nincs külön styling-típus. A Szegedi Nemzeti Színház marad. Nyitott: Operaház, konzultációs díj.
+## Állapot
+- Ezen a gépen párhuzamosan egy másik weboldal is fejlesztés alatt áll (WSL-ben), ami a 4200-as portot
+  használja, ezért a frontend a **4201**-en fut (`angular.json` → `serve.options.port`).
+- Élesben: https://e-hajmuvek.netlify.app (Netlify, a `main` ágról automatikusan települ).
+  GitHub: https://github.com/bttnhvs/endrody-hajmuvek. A `.claude/` mappa a `.gitignore`-ban van.
+- Domain: **endrodywigs.com**, e-mail: **hello@endrodywigs.com** – 2026-11-22-én még nem élt.
+- Márkanév nyelvenként: magyarul **Endrődy Hajművek**, angolul **Endrődy Wigs**.
+- 2026-11-28: **Netlify Formsra váltás**, a backend, az admin, a Render/Neon/Resend/Formspree törölve.
+  A Netlifyban kézzel be kell kapcsolni a form-észlelést és az e-mail-értesítést (lásd KITELEPITES.md).
+- 2026-11-28: **fejlesztés alatti mód** bekapcsolva (`SITE.underConstruction: true`): felső sáv +
+  `noindex`. Élesítéskor `false`. A hero a `--notice-h` CSS-változóval vonja le a sáv magasságát.
+- Helykitöltők (TODO): telefonszám, Etsy-link, az adatkezelési tájékoztató [szögletes zárójeles] részei
+  (adatkezelő neve, székhely, adószám, dátum, megőrzési idő, USA-adattovábbítás), `about.makerName`.
+- Nyitott kérdések Juditnak: Operaház a listán, személyes konzultáció díja, Styling-oldal szövege,
+  három „kézzel csomózott” képaláírás.
 
 ## Lehetséges következő lépések
-1. Kitelepítés a `KITELEPITES.md` alapján (fiókok, GitHub-repó – ehhez a felhasználó kell)
-2. Swagger (`@nestjs/swagger`), e2e teszt (supertest), TypeORM migrációk
-3. Frontend tesztkörnyezet és első komponenstesztek (pl. az admin lista, az űrlap)
-4. Adatkezelési tájékoztató oldal (sablon, a barátnőnek kell jóváhagynia)
-5. Galéria adatbázisba költöztetése képfeltöltéssel
+1. Az adatkezelési tájékoztató kitöltése, majd `underConstruction: false` és élesítés
+2. Saját domain bekötése a Netlifyban
+3. Frontend tesztkörnyezet és első komponenstesztek (pl. az űrlap validációja)
+4. Prerender (`@angular/ssr`), hogy az angol oldalaknak is saját linkelőnézetük legyen

@@ -41,15 +41,13 @@
       </ul>
       <a class="btn nav__cta" [routerLink]="i18n.path('/ajanlatkeres')">{{ t.common.cta }}</a>
       <!-- Nyelvváltó: ugyanarra az oldalra visz a másik nyelven, a query paraméterek megmaradnak. -->
-      @if (!i18n.isAdmin()) {
-        <a
-          class="lang"
-          [routerLink]="i18n.switchPath()"
-          queryParamsHandling="preserve"
-          [attr.hreflang]="i18n.lang() === 'hu' ? 'en' : 'hu'"
-          [attr.aria-label]="t.nav.switchAria"
-        >{{ t.nav.switchLabel }}</a>
-      }
+      <a
+        class="lang"
+        [routerLink]="i18n.switchPath()"
+        queryParamsHandling="preserve"
+        [attr.hreflang]="i18n.lang() === 'hu' ? 'en' : 'hu'"
+        [attr.aria-label]="t.nav.switchAria"
+      >{{ t.nav.switchLabel }}</a>
     </nav>
   </div>
 </header>
